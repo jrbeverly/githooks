@@ -1,0 +1,14 @@
+#!/bin/sh
+
+#
+# Variables
+#
+DIR=$(dirname $(readlink -f "$0"))
+DIR_HOOKS="$DIR/commit-msg.d"
+
+#
+# Main
+#
+for file in $DIR_HOOKS/*.sh; do
+    sh "$file" || exit 1
+done
