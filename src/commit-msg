@@ -5,10 +5,15 @@
 #
 DIR=$(dirname $(readlink -f "$0"))
 DIR_HOOKS="$DIR/commit-msg.d"
+FILES=$DIR_HOOKS/*.sh
 
 #
 # Main
 #
-for file in $DIR_HOOKS/*.sh; do
-    sh "$file" || exit 1
+if [ ! -d "$DIR_HOOKS" ]; then
+    exit 0
+fi
+
+for file in $FILES; do
+    [ -f "$file" ] && [ sh "$file" || exit 1 ]
 done
