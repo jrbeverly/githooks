@@ -51,3 +51,6 @@ function teardown() {
     [ "$status" -eq 0 ]
     [[ "$output" == "Hello World" ]]
 }
+
+# Multi-hook
+# Order of execution

@@ -10,7 +10,7 @@ BATS_TEST_UUID=
 # 
 
 function get_root_dir() {
-    dirname $BATS_TEST_DIRNAME
+    dirname $(dirname $BATS_TEST_DIRNAME)
 }
 
 function get_test_dir() {
