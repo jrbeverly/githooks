@@ -54,7 +54,15 @@ function clean() {
 
 function copy_resource() {
     DIR_RESOURCE=$(get_resource_dir)
+
     cp "$DIR_RESOURCE/$1" "$2"
+}
+
+function copy_resource_to_hook() {
+    DIR_RESOURCE=$(get_resource_dir)
+    HOOK_DIR="$1.d"
+    
+    cp "$DIR_RESOURCE/$2" "$HOOK_DIR/$2"
 }
 
 function copy_script() {

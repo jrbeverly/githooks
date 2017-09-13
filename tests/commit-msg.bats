@@ -43,10 +43,11 @@ function teardown() {
 @test "Simple hook" {
     copy_script $HOOK_NAME $HOOK_NAME
     touch_hook $HOOK_NAME
-    copy_resource "simple.sh" "$HOOK_NAME.d/simple.sh"
+    copy_resource_to_hook $HOOK_NAME "hello.sh"
     
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
+    [[ "$output" == "Hello World" ]]
 }
