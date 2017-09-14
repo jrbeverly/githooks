@@ -9,3 +9,4 @@ tests/**/target/
 
 ## Build outputs:
 bin/
+out/

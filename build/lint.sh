@@ -1,4 +1,6 @@
 #!/bin/sh
+err=0
+trap 'err=1' ERR
 
 #
 # Variables
@@ -17,7 +19,7 @@ command -v shellcheck >/dev/null 2>&1 || { echo >&2 "The script requires 'shellc
 #
 # Main
 #
-rm -rf $DIR_BIN && mkdir -p $DIR_BIN
+rm -rf $DIR_BIN/* && mkdir -p $DIR_BIN
 cp -R $DIR_ROOT/src/* $DIR_BIN/
 cd $DIR_BIN/
 
@@ -42,3 +44,5 @@ for primary_hook in $FILES; do
         fi
     fi
 done
+
+test $err = 0 
