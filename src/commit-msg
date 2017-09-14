@@ -17,6 +17,6 @@ fi
 for file in $FILES; do
     if [ -f "$file" ]
     then
-        sh "$file" || exit 1
+        sh "$file" $@ || exit 1
     fi
 done

@@ -3,7 +3,6 @@
 #
 # Variables
 #
-BATS_TEST_UUID=
 
 #
 # Pathing
