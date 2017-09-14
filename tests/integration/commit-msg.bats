@@ -92,20 +92,6 @@ function teardown() {
     [[ "$output" == "$my_echo" ]]
 }
 
-@test "Test parameter passing" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "echo.sh"
-    
-    my_echo="ECHO ECHO ECHO"
-
-    run sh $HOOK_NAME "$my_echo"
-    echo "status: $status"
-    echo "output: $output"
-    [ "$status" -eq 0 ]
-    [[ "$output" == "$my_echo" ]]
-}
-
 @test "Simple hook ordering" {
     copy_script $HOOK_NAME $HOOK_NAME
     touch_hook $HOOK_NAME
@@ -138,4 +124,20 @@ function teardown() {
     [[ "${lines[2]}" == "010" ]]
     [[ "${lines[3]}" == "021" ]]
     [[ "${lines[4]}" == "999" ]]
+}
+
+@test "Terminate on error" {
+    copy_script $HOOK_NAME $HOOK_NAME
+    touch_hook $HOOK_NAME
+    copy_resource_to_hook $HOOK_NAME "010-script.sh"
+    copy_resource_to_hook $HOOK_NAME "020-error.sh"
+    copy_resource_to_hook $HOOK_NAME "021-script.sh"
+    
+    run sh $HOOK_NAME
+    echo "status: $status"
+    echo "output: $output"
+    [ "$status" -eq 1 ]
+    [[ "${lines[0]}" == "010" ]]
+    [[ "${lines[1]}" != "021" ]]
+    [[ "${lines[1]}" == "" ]]
 }
