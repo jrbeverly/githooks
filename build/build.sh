@@ -1,13 +1,6 @@
 #!/bin/sh
 
 #
-# Functions
-#
-create_msg() {
-    echo "My_Commit_Msg"
-}
-
-#
 # Variables
 #
 DIR=$(dirname $(readlink -f "$0"))
@@ -44,7 +37,7 @@ for primary_hook in $FILES; do
         then
             for hookscript in $primary_hook.d/*.sh; do
                 scriptname=$(basename "$hookscript")
-                shellcheck --shell=sh "$hookscript" && echo "Passed: $scriptname"
+                shellcheck --shell=sh "$hookscript" && echo "Passed: $hookname/$scriptname"
             done
         fi
     fi
