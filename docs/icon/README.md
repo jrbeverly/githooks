@@ -1,11 +1,11 @@
 # Icon Credits
-## Cloud Docker
-By [cre.ativo mustard](https://thenounproject.com/cre.ativo.mustard), HK from the Noun Project
+## Octopus
+By [Mario Gallego Adán](https://thenounproject.com/mario.multimedia.colon), from the Noun Project
 
 ---
 
-* **Tags**: Cloud Docker, Cloud, Container, Data, Docker, Host
-* **Source**: https://thenounproject.com/term/docker/676618/
-* **License**: Creative Commons
+* **Tags**: Octopus, Water, Tropics, Tropical, Sea Creature, Sea Animal, Sea, Ocean, Fauna, Animal, Ocean Critter
+* **Source**: https://thenounproject.com/term/octopus/117993/
+* **License**: Public Domain
 
 ---
