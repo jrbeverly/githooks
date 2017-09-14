@@ -1,0 +1,85 @@
+image: alpine:latest
+
+# ---------------------------------------
+# Global
+# ---------------------------------------
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  STAGING_REGISTRY: registry.gitlab.com
+  STAGING_NAMESPACE: jrbeverly-docker
+  STAGING_PROJECT: docker-xwindow
+
+  REGISTRY: docker.io
+  NAMESPACE: jrbeverly
+  PROJECT: xwindow
+
+  GIT_COMMIT: ${CI_COMMIT_SHA}
+  TAG_PREFIX: ${CI_PIPELINE_ID}-
+
+# ----------------------------------------
+# Prescript
+# ----------------------------------------
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $STAGING_REGISTRY
+  - apk --update-cache add make
+
+# ----------------------------------------
+# Build
+# ----------------------------------------
+
+build:
+  stage: build
+  image: debian:latest
+  script:
+    - apt-get install posh
+    - sh 
+  only:
+    - web
+    - master
+
+# ----------------------------------------
+# Tests
+# ----------------------------------------
+
+test-unit:
+  stage: test
+  image: jrbeverly/bats:baseimage
+  script:
+    - sh tests/unit/run.sh
+  dependencies:
+    - build
+  only:
+    - web
+    - master
+
+test-integration:
+  stage: test
+  image: jrbeverly/bats:baseimage
+  script:
+    - sh tests/integration/run.sh
+  dependencies:
+    - build
+  only:
+    - web
+    - master
+
+# ----------------------------------------
+# Deploy
+# ----------------------------------------
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Nothing to do"
+  dependencies:
+    - test-unit
+    - test-integration
+  only:
+    - web
+    - master

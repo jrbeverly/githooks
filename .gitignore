@@ -7,3 +7,5 @@ docs/**/images/
 ## Test outputs:
 tests/**/target/
 
+## Build outputs:
+bin/
