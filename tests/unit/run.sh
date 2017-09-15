@@ -5,12 +5,21 @@ DIR=$(dirname "$(readlink -f "$0")")
 # Verification
 #
 command -v bats >/dev/null 2>&1 || { echo >&2 "The script requires 'bats' but it's not installed.  Aborting."; exit 1; }
-command -v boxes >/dev/null 2>&1 || { echo >&2 "The script requires 'boxes' but it's not installed.  Aborting."; exit 1; }
 
 #
 # Main
 #
-echo "Running unit tests." | boxes -d peek -a c -s 40x11
+echo "/*       _\|/_"
+echo "         (o o)"
+echo " +----oOO-{_}-OOo----------------------+"
+echo " |                                     |"
+echo " |                                     |"
+echo " |                                     |"
+echo " |        Running unit tests.          |"
+echo " |                                     |"
+echo " |                                     |"
+echo " |                                     |"
+echo " +------------------------------------*/"
 
 for file in "$DIR/"*.bats; do
     if [ -f "$file" ]
@@ -20,7 +29,9 @@ for file in "$DIR/"*.bats; do
 
         echo
         echo
-        echo "Running $testname tests." | boxes
+        echo "/********************************/"
+        echo "/* Running $testname tests."
+        echo "/********************************/"
         bats --pretty "$file"
 
     fi

@@ -13,4 +13,4 @@ docker run --rm \
     -v "$DIR":/my-tests \
     --workdir /my-tests \
     --entrypoint "" \
-    dduportal/bats apt-get install -y boxes > /dev/null 2>&1 && sh run.sh
+    dduportal/bats sh run.sh
