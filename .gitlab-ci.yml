@@ -19,7 +19,7 @@ stages:
 
 build:
   stage: build
-  image: koalaman/shellcheck
+  image: davidhrbac/docker-shellcheck
   script:
     - sh build/lint.sh
   only:
