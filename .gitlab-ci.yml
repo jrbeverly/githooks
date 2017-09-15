@@ -9,18 +9,6 @@ stages:
   - test
   - deploy
 
-variables:
-  STAGING_REGISTRY: registry.gitlab.com
-  STAGING_NAMESPACE: jrbeverly-docker
-  STAGING_PROJECT: docker-xwindow
-
-  REGISTRY: docker.io
-  NAMESPACE: jrbeverly
-  PROJECT: xwindow
-
-  GIT_COMMIT: ${CI_COMMIT_SHA}
-  TAG_PREFIX: ${CI_PIPELINE_ID}-
-
 # ----------------------------------------
 # Prescript
 # ----------------------------------------
@@ -31,9 +19,8 @@ variables:
 
 build:
   stage: build
-  image: debian:latest
+  image: nlknguyen/alpine-shellcheck
   script:
-    - apt-get install -y shellcheck
     - sh build/lint.sh
   only:
     - web
@@ -71,7 +58,6 @@ test-integration:
 
 deploy:
   stage: deploy
-  image: jrbeverly/build-tools:baseimage
   script:
     - echo "Packaging up hooks"
   artifacts:
