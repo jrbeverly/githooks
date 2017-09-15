@@ -12,7 +12,6 @@ FILES="$DIR_BIN/*"
 #
 # Verification
 #
-command -v boxes >/dev/null 2>&1 || { echo >&2 "The script requires 'boxes' but it's not installed.  Aborting."; exit 1; }
 command -v shellcheck >/dev/null 2>&1 || { echo >&2 "The script requires 'shellcheck' but it's not installed.  Aborting."; exit 1; }
 
 #
@@ -22,7 +21,17 @@ rm -rf "${DIR_BIN:?}"/* && mkdir -p "$DIR_BIN"
 cp -R "$DIR_ROOT/src/"* "$DIR_BIN/"
 cd "$DIR_BIN/"
 
-echo "Building githooks" | boxes -d peek -a c -s 40x11
+echo "/*       _\|/_"
+echo "         (o o)"
+echo " +----oOO-{_}-OOo----------------------+"
+echo " |                                     |"
+echo " |                                     |"
+echo " |                                     |"
+echo " |          Building githooks          |"
+echo " |                                     |"
+echo " |                                     |"
+echo " |                                     |"
+echo " +------------------------------------*/"
 
 for primary_hook in $FILES; do
     if [ -f "$primary_hook" ]
@@ -31,7 +40,9 @@ for primary_hook in $FILES; do
 
         echo
         echo
-        echo "Linting $hookname" | boxes
+        echo "/**********************/"
+        echo "/* Linting $hookname"
+        echo "/**********************/"
         shellcheck --shell=sh "$primary_hook" && echo "Passed: $hookname"
         [ $? -ne 0 ] && err=$((err+1))
 

@@ -19,7 +19,7 @@ stages:
 
 build:
   stage: build
-  image: nlknguyen/alpine-shellcheck
+  image: davidhrbac/docker-shellcheck
   script:
     - sh build/lint.sh
   only:
@@ -61,6 +61,7 @@ deploy:
   script:
     - echo "Packaging up hooks"
   artifacts:
+    expire_in: 4 weeks
     paths:
       - src/*
   dependencies:

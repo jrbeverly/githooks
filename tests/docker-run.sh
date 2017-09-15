@@ -1,5 +1,6 @@
 #!/bin/sh
 DIR=$(dirname "$(readlink -f "$0")")
+DIR_ROOT=$(dirname "$DIR")
 
 #
 # Verification
@@ -10,7 +11,5 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "The script requires 'docker' bu
 # Main
 #
 docker run --rm \
-    -v "$DIR":/my-tests \
-    --workdir /my-tests \
-    --entrypoint "" \
-    dduportal/bats apt-get install -y boxes > /dev/null 2>&1 && sh run.sh
+    -v "$DIR_ROOT":/media \
+    jrbeverly/bats:baseimage sh tests/run.sh
