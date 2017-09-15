@@ -19,7 +19,7 @@ stages:
 
 build:
   stage: build
-  image: nlknguyen/alpine-shellcheck
+  image: koalaman/shellcheck
   script:
     - sh build/lint.sh
   only:
@@ -63,6 +63,7 @@ deploy:
   artifacts:
     paths:
       - src/*
+    expires_in: 4 weeks
   dependencies:
     - test-unit
     - test-integration
