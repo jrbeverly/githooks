@@ -61,9 +61,9 @@ deploy:
   script:
     - echo "Packaging up hooks"
   artifacts:
+    expire_in: 4 weeks
     paths:
       - src/*
-    expires_in: 4 weeks
   dependencies:
     - test-unit
     - test-integration
