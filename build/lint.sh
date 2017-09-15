@@ -1,12 +1,11 @@
 #!/bin/sh
 err=0
-trap 'err=1' ERR
 
 #
 # Variables
 #
-DIR=$(dirname $(readlink -f "$0"))
-DIR_ROOT=$(dirname $DIR)
+DIR=$(dirname "$(readlink -f "$0")")
+DIR_ROOT=$(dirname "$DIR")
 DIR_BIN="$DIR_ROOT/bin"
 FILES="$DIR_BIN/*"
 
@@ -19,11 +18,11 @@ command -v shellcheck >/dev/null 2>&1 || { echo >&2 "The script requires 'shellc
 #
 # Main
 #
-rm -rf $DIR_BIN/* && mkdir -p $DIR_BIN
-cp -R $DIR_ROOT/src/* $DIR_BIN/
-cd $DIR_BIN/
+rm -rf "${DIR_BIN:?}"/* && mkdir -p "$DIR_BIN"
+cp -R "$DIR_ROOT/src/"* "$DIR_BIN/"
+cd "$DIR_BIN/"
 
-echo "Building githooks" | boxes -d dog
+echo "Building githooks" | boxes -d peek -a c -s 40x11
 
 for primary_hook in $FILES; do
     if [ -f "$primary_hook" ]
@@ -34,15 +33,17 @@ for primary_hook in $FILES; do
         echo
         echo "Linting $hookname" | boxes
         shellcheck --shell=sh "$primary_hook" && echo "Passed: $hookname"
+        [ $? -ne 0 ] && err=$((err+1))
 
         if [ -d "$primary_hook.d/" ]
         then
             for hookscript in $primary_hook.d/*.sh; do
                 scriptname=$(basename "$hookscript")
                 shellcheck --shell=sh "$hookscript" && echo "Passed: $hookname/$scriptname"
+                [ $? -ne 0 ] && err=$((err+1))
             done
         fi
     fi
 done
 
-test $err = 0 
+exit $err
