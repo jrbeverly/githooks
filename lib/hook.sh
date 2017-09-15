@@ -4,8 +4,8 @@
 # Pathing
 #############
 
-function current_directory() {
-    dirname $(readlink -f "$0")
+current_directory() {
+    dirname "$(readlink -f "$0")"
 }
 
 #############

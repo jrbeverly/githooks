@@ -1,0 +1,71 @@
+image: alpine:latest
+
+# ---------------------------------------
+# Global
+# ---------------------------------------
+
+stages:
+  - build
+  - test
+  - deploy
+
+# ----------------------------------------
+# Prescript
+# ----------------------------------------
+
+# ----------------------------------------
+# Build
+# ----------------------------------------
+
+build:
+  stage: build
+  image: nlknguyen/alpine-shellcheck
+  script:
+    - sh build/lint.sh
+  only:
+    - web
+    - master
+
+# ----------------------------------------
+# Tests
+# ----------------------------------------
+
+test-unit:
+  stage: test
+  image: jrbeverly/bats:baseimage
+  script:
+    - sh tests/unit/run.sh
+  dependencies:
+    - build
+  only:
+    - web
+    - master
+
+test-integration:
+  stage: test
+  image: jrbeverly/bats:baseimage
+  script:
+    - sh tests/integration/run.sh
+  dependencies:
+    - build
+  only:
+    - web
+    - master
+
+# ----------------------------------------
+# Deploy
+# ----------------------------------------
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Packaging up hooks"
+  artifacts:
+    paths:
+      - src/*
+  dependencies:
+    - test-unit
+    - test-integration
+  only:
+    - web
+    - master
