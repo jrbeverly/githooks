@@ -41,13 +41,9 @@ function test_setup() {
 
     mkdir -p "$test_path"
     cd "$test_path"
-
-    git init
-    git config user.email "test@test.com"
-    git config user.name "test"
 }
 
-function test_teardown() {  
+function test_teardown() {
     rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
 }
 
@@ -75,22 +71,15 @@ function copy_script() {
 
 function touch_hook() {
     HOOK_DIR="$1.d"
-    mkdir -p ".git/hooks/$HOOK_DIR"
-}
-
-function init_hook() {
-    HOOK="$1"
-    HOOK_DIR="$HOOK.d"
-    DIR_SRC=$(get_source_dir)
-
-    cp "$DIR_SRC/$HOOK" ".git/hooks/$HOOK"
-    mkdir -p ".git/hooks/$HOOK_DIR"    
+    mkdir -p "$HOOK_DIR"
 }
 
 function copy_hook() {
-    HOOK="$1"
-    HOOK_DIR="$HOOK.d"
+    HOOK_DIR="$1.d"
+
     DIR_SRC=$(get_source_dir)
+    DIR_HOOK="$DIR_SRC/$HOOK_DIR"
     
-    cp "$DIR_SRC/$HOOK_DIR/$2.sh" ".git/hooks/$HOOK_DIR/$2.sh"
+    mkdir -p "$HOOK_DIR"
+    cp "$DIR_HOOK/$2.sh" "$HOOK_DIR/$2.sh"
 }
