@@ -12,5 +12,5 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "The script requires 'docker' bu
 # Main
 #
 docker run --rm \
-    -v "$DIR_ROOT":/media \
-    jrbeverly/bats:baseimage sh tests/integration/run.sh
+   -v "$DIR_ROOT":/media \
+   jrbeverly/bats:baseimage sh tests/integration/run.sh
