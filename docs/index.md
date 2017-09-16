@@ -41,11 +41,6 @@ This will install the hook `001-my-githook.sh` into the `commit-msg.d/` director
 
 ## Hooks
 
-|Name|Description|
-|---|---|
-|commit-msg|The commit-msg hook takes a path to a temporary file that contais the commit message. If this script exits non-zero, Git aborts the commit process.|
-|pre-push|The pre-push hook runs during git push, after the remote refs have been updated but before any objects have been transferred. If this script exits non-zero, Git aborts the commit process.|
-
 ### Hook: commit-msg
 
 The `commit-msg` hook takes a path to a temporary file that contais the commit message. If this script exits non-zero, Git aborts the commit process. The following hooks are designed to prevent mistakes or encourage better practices.
@@ -64,3 +59,4 @@ The `pre-push` hook runs during git push, after the remote refs have been update
 
 |Name|Description|
 |---|---|
+|*|*|

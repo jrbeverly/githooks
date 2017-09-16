@@ -5,12 +5,14 @@ image: alpine:latest
 # ---------------------------------------
 
 stages:
-  - build
-  - test
-  - deploy
+  - "Build"
+  - "Tests"
+  - "Unit Tests"
+  - "Integration Tests"
+  - "Deploy"
 
 variables:
-  CI: true
+  CI: "true"
 
 # ----------------------------------------
 # Prescript
@@ -21,7 +23,7 @@ variables:
 # ----------------------------------------
 
 build:
-  stage: build
+  stage: "Build"
   image: davidhrbac/docker-shellcheck
   script:
     - sh build/lint.sh
@@ -34,7 +36,31 @@ build:
 # ----------------------------------------
 
 test-entrypoint:
-  stage: test
+  stage: "Tests"
+  image: jrbeverly/bats:baseimage
+  script:
+    - sh .docker/provision.sh
+    - sh tests/entrypoint/run.sh
+  dependencies:
+    - build
+  only:
+    - web
+    - master
+
+test-unit:
+  stage: "Unit Tests"
+  image: jrbeverly/bats:baseimage
+  script:
+    - sh .docker/provision.sh
+    - sh tests/unit/run.sh
+  dependencies:
+    - build
+  only:
+    - web
+    - master
+
+test-integration:
+  stage: "Integration Tests"
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
@@ -45,36 +71,12 @@ test-entrypoint:
     - web
     - master
 
-test-unit:
-  stage: test
-  image: jrbeverly/bats:baseimage
-  script:
-    - sh .docker/provision.sh
-    - sh tests/unit/run.sh
-  dependencies:
-    - test-entrypoint
-  only:
-    - web
-    - master
-
-test-integration:
-  stage: test
-  image: jrbeverly/bats:baseimage
-  script:
-    - sh .docker/provision.sh
-    - sh tests/integration/run.sh
-  dependencies:
-    - test-unit
-  only:
-    - web
-    - master
-
 # ----------------------------------------
 # Deploy
 # ----------------------------------------
 
 deploy:
-  stage: deploy
+  stage: "Deploy"
   script:
     - apk add -U zip
     - sh build/package.sh
