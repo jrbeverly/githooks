@@ -49,9 +49,12 @@ for primary_hook in $FILES; do
         if [ -d "$primary_hook.d/" ]
         then
             for hookscript in $primary_hook.d/*.sh; do
-                scriptname=$(basename "$hookscript")
-                shellcheck --shell=sh "$hookscript" && echo "Passed: $hookname/$scriptname"
-                [ $? -ne 0 ] && err=$((err+1))
+                if [ -f "$hookscript" ]
+                then
+                    scriptname=$(basename "$hookscript")
+                    shellcheck --shell=sh "$hookscript" && echo "Passed: $hookname/$scriptname"
+                    [ $? -ne 0 ] && err=$((err+1))
+                fi
             done
         fi
     fi
