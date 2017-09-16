@@ -6,6 +6,7 @@ load "lib/test_helper"
 #
 TEST_ENTRYPOINT="commit-msg"
 TEST_HOOK="041-checkjira.matchkey"
+TEST_CONFIG_HOOK="checkjira.matchkey.enabled"
 
 #
 # Setup/Teardown
@@ -21,6 +22,46 @@ function teardown() {
 #
 # Tests
 #
+
+@test "Hook is disabled" {
+    init_commit
+
+    copy_entry $TEST_ENTRYPOINT
+    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
+    
+    BRANCH="feature/AS-100-work-branch"
+    COMMIT="Commit has no issue id"
+
+    git config --add "$TEST_CONFIG_HOOK" false
+    git checkout -b $BRANCH > /dev/null 2>&1
+    echo "Simple" >> file
+
+    run git commit -a -m "$COMMIT"
+    echo "status: $status"
+    echo "output: $output"
+    echo "configuration: " $(git config "$TEST_CONFIG_HOOK")
+    [ "$status" -eq 0 ]
+}
+
+@test "Hook is enabled, and commit is rejected" {
+    init_commit
+
+    copy_entry $TEST_ENTRYPOINT
+    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
+    
+    BRANCH="feature/AS-100-work-branch"
+    COMMIT="Commit has no issue id"
+
+    git config --add "$TEST_CONFIG_HOOK" true
+    git checkout -b $BRANCH > /dev/null 2>&1
+    echo "Simple" >> file
+
+    run git commit -a -m "$COMMIT"
+    echo "status: $status"
+    echo "output: $output"
+    echo "configuration: " $(git config "$TEST_CONFIG_HOOK")
+    [ "$status" -ne 0 ]
+}
 
 @test "Commit has exact issue id" {
     init_commit

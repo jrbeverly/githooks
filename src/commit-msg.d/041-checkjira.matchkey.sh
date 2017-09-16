@@ -10,19 +10,39 @@ GIT_FEATURE_REGEX='feature/'
 #
 # Functions
 #
+get_current_branch() {
+    git rev-parse --abbrev-ref HEAD
+}
+
+get_config() {
+    git config "checkjira.matchkey.enabled"
+}
+
+is_feature_branch() {
+    echo "$1" | grep -q "$GIT_FEATURE_REGEX"
+}
+
+is_issue_present() {
+    echo "$1" | grep -q "$JIRA_ISSUE_REGEX"
+}
 
 #
 # Main
 #
-commit_file="$1"
-branch=$(git rev-parse --abbrev-ref HEAD)
 
-if ! echo "$branch" | grep -q "$GIT_FEATURE_REGEX"; then
+if [ "$(get_config)" = "false" ]; then
+    exit 0
+fi
+
+commit_file="$1"
+branch=$(get_current_branch)
+
+if ! $(is_feature_branch "$branch"); then
     exit 0
 fi
 
 commit=$(cat "$commit_file")
-if echo "$commit" | grep -q "$JIRA_ISSUE_REGEX"; then
+if $(is_issue_present "$commit"); then
     exit 0  
 fi
 
