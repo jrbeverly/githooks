@@ -1,7 +1,6 @@
 #!/bin/sh
 DIR=$(dirname "$(readlink -f "$0")")
-DIR_TESTS=$(dirname "$DIR")
-DIR_ROOT=$(dirname "$DIR_TESTS")
+DIR_ROOT=$(dirname "$DIR")
 
 #
 # Verification
@@ -12,5 +11,6 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "The script requires 'docker' bu
 # Main
 #
 docker run --rm \
-   -v "$DIR_ROOT":/media \
-   jrbeverly/bats:baseimage sh tests/integration/run.sh
+    -v "$DIR_ROOT":/media \
+    --workdir /media \
+    davidhrbac/docker-shellcheck sh build/lint.sh
