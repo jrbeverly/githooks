@@ -45,7 +45,7 @@ function teardown() {
 
 @test "Reject on bad commit" {
     BRANCH="feature/AS-100-work-branch"
-    COMMIT="Missing in commit"
+    COMMIT="Issue ID is missing in commit"
 
     install_entrypoint $TEST_ENTRYPOINT .
     install_hook $TEST_ENTRYPOINT "extendjira.issue"
