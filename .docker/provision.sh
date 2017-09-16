@@ -1,4 +1,5 @@
 #!/bin/sh
 
-apt-get update
-apt-get install -y git
+echo "Installing git"
+apt-get update > /dev/null 2>&1
+apt-get install -y git > /dev/null 2>&1
