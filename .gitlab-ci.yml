@@ -37,7 +37,7 @@ build:
 
 test-entrypoint:
   stage: "Tests"
-  image: jrbeverly/bats:baseimage
+  image: dduportal/bats
   script:
     - sh .docker/provision.sh
     - sh tests/entrypoint/run.sh
@@ -49,7 +49,7 @@ test-entrypoint:
 
 test-unit:
   stage: "Unit Tests"
-  image: jrbeverly/bats:baseimage
+  image: dduportal/bats
   script:
     - sh .docker/provision.sh
     - sh tests/unit/run.sh
@@ -61,7 +61,7 @@ test-unit:
 
 test-integration:
   stage: "Integration Tests"
-  image: jrbeverly/bats:baseimage
+  image: dduportal/bats
   script:
     - sh .docker/provision.sh
     - sh tests/integration/run.sh
