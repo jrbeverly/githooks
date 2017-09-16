@@ -1,20 +1,23 @@
 #!/usr/bin/env bats
-load "lib/test_helper"
+load "../lib/filesystem"
+load "../lib/git"
+load "../lib/scaffolding"
+load "lib/unit"
 
 #
 # Variables
 #
-TEST_ENTRYPOINT="pre-applypatch"
+TEST_ENTRYPOINT="pre-rebase"
 
 #
 # Setup/Teardown
 #
 function setup() {
-    test_setup
+    test_prepare
 }
 
 function teardown() {
-    test_teardown
+    test_cleanup
 }
 
 #
@@ -22,37 +25,38 @@ function teardown() {
 #
 
 @test "No hook directory" {
-    copy_entrypoint $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy   
 
-    run git commit -a -m "Dummy"
+    run sh $TEST_ENTRYPOINT
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
 }
 
 @test "Empty hook directory" {
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy 
+    entrypoint_touch $TEST_ENTRYPOINT
 
-    run git commit -a -m "Dummy"
+    run sh $TEST_ENTRYPOINT
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
 }
 
 @test "Simple hook" {
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
     copy_resource $TEST_ENTRYPOINT "hello.sh"
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy 
 
-    run git commit -a -m "Dummy"
+    run sh $TEST_ENTRYPOINT
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
@@ -60,14 +64,14 @@ function teardown() {
 }
 
 @test "Multiple hooks" {
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
     copy_resource $TEST_ENTRYPOINT "hello.sh"
     copy_resource $TEST_ENTRYPOINT "world.sh"
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy 
 
-    run git commit -a -m "Dummy"
+    run sh $TEST_ENTRYPOINT
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
@@ -76,28 +80,30 @@ function teardown() {
 }
 
 @test "Test parameter passing" {
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
     copy_resource $TEST_ENTRYPOINT "echo.sh"
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy 
 
-    run git commit -a -m "Dummy"
+    echo="ECHO ECHO ECHO"
+
+    run sh $TEST_ENTRYPOINT "$echo"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
-    [[ "${lines[0]}" == *"COMMIT_EDITMSG" ]]
+    [[ "${lines[0]}" == $echo ]]
 }
 
 @test "Simple hook ordering" {
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
     copy_resource $TEST_ENTRYPOINT "001-script.sh"
     copy_resource $TEST_ENTRYPOINT "999-script.sh"
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy 
 
-    run git commit -a -m "Dummy"
+    run sh $TEST_ENTRYPOINT
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
@@ -106,17 +112,17 @@ function teardown() {
 }
 
 @test "Hook ordering" {
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
     copy_resource $TEST_ENTRYPOINT "001-script.sh"
     copy_resource $TEST_ENTRYPOINT "009-script.sh"
     copy_resource $TEST_ENTRYPOINT "010-script.sh"
     copy_resource $TEST_ENTRYPOINT "021-script.sh"
     copy_resource $TEST_ENTRYPOINT "999-script.sh"
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy 
 
-    run git commit -a -m "Dummy"
+    run sh $TEST_ENTRYPOINT
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
@@ -128,15 +134,15 @@ function teardown() {
 }
 
 @test "Terminate on error" {
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
     copy_resource $TEST_ENTRYPOINT "010-script.sh"
     copy_resource $TEST_ENTRYPOINT "020-error.sh"
     copy_resource $TEST_ENTRYPOINT "021-script.sh"
 
-    echo "Simple" > file
-    git add file
+    git_first_commit
+    git_dummy 
 
-    run git commit -a -m "Dummy"
+    run sh $TEST_ENTRYPOINT
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 1 ]
