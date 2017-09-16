@@ -13,6 +13,6 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "The script requires 'docker' bu
 docker pull jrbeverly/bats:baseimage
 
 docker run --rm -it \
-    -e CI=true \
+    -e CI="true" \
     -v "$DIR_ROOT":/media \
-    jrbeverly/bats:baseimage bash .docker/provision.sh && bash tests/run.sh
+    jrbeverly/bats:baseimage sh .docker/entrypoint.sh ".docker/provision.sh" "tests/run.sh"

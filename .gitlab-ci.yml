@@ -76,11 +76,12 @@ test-integration:
 deploy:
   stage: deploy
   script:
-    - echo "Packaging up hooks"
+    - apk add -U zip
+    - sh build/package.sh
   artifacts:
     expire_in: 4 weeks
     paths:
-      - src/*
+      - out/githooks*.zip
   only:
     - web
     - master

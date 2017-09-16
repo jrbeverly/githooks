@@ -19,6 +19,6 @@ echo "/* before attempting to run any tests          */"
 echo "/***********************************************/"
 echo
 docker run --rm -it \
-    -e CI=true \
+    -e CI="true" \
     -v "$DIR_ROOT":/media \
     jrbeverly/bats:baseimage bash
