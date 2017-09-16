@@ -14,11 +14,12 @@ docker pull dduportal/bats
 
 echo
 echo "/***********************************************/"
-echo "/* Please run 'sh tests/.docker/provision.sh'  */"
+echo "/* Please run 'sh .docker/provision.sh'  */"
 echo "/* before attempting to run any tests          */"
 echo "/***********************************************/"
 echo
 docker run --rm -it \
     -v "$DIR_ROOT":/media \
+    --workdir /media \
     --entrypoint bash \
     dduportal/bats
