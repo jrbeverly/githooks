@@ -1,10 +1,13 @@
 #!/usr/bin/env bats
-load "lib/test_helper"
+load "../lib/filesystem"
+load "../lib/git"
+load "../lib/scaffolding"
+load "lib/unit"
 
 #
 # Variables
 #
-HOOK_NAME="commit-msg"
+TEST_ENTRYPOINT="commit-msg"
 
 #
 # Setup/Teardown
@@ -22,19 +25,18 @@ function teardown() {
 #
 
 @test "Commit with jira issue" {
-    echo "Simple" > file
-    git add file && git commit -a -m "Init"
-
-    init_hook $HOOK_NAME
-    copy_hook $HOOK_NAME "030-extendjira.issue"
-    copy_hook $HOOK_NAME "040-checkjira.enforcekey"    
-    
     BRANCH="feature/AS-100-work-branch"
     COMMIT="AS-100 is commit"
 
-    git checkout -b $BRANCH
-    echo "Simple" >> file
+    install_entrypoint $TEST_ENTRYPOINT .
+    install_hook $TEST_ENTRYPOINT "extendjira.issue"
+    install_hook $TEST_ENTRYPOINT "checkjira.enforcekey"    
 
+    git_first_commit
+    git_dummy
+    git checkout -b $BRANCH > /dev/null 2>&1
+
+    git_change
     run git commit -a -m "$COMMIT"
     echo "status: $status"
     echo "output: $output"
@@ -42,43 +44,39 @@ function teardown() {
 }
 
 @test "Reject on bad commit" {
-    echo "Simple" > file
-    git add file && git commit -a -m "Init"
-
-    init_hook $HOOK_NAME
-    copy_hook $HOOK_NAME "030-extendjira.issue"
-    copy_hook $HOOK_NAME "040-checkjira.enforcekey"    
-    
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Missing in commit"
 
-    git checkout -b $BRANCH
-    echo "Simple" >> file
+    install_entrypoint $TEST_ENTRYPOINT .
+    install_hook $TEST_ENTRYPOINT "extendjira.issue"
+    install_hook $TEST_ENTRYPOINT "checkjira.enforcekey"    
 
+    git_first_commit
+    git_dummy
+    git checkout -b $BRANCH > /dev/null 2>&1
+
+    git_change
     run git commit -a -m "$COMMIT"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -ne 0 ]
 }
 
-@test "Reject on bad commit" {
-    echo "Simple" > file
-    git add file && git commit -a -m "Init"
-
-    init_hook $HOOK_NAME
-    copy_hook $HOOK_NAME "030-extendjira.issue"
-    copy_hook $HOOK_NAME "040-checkjira.enforcekey"    
-    
-    CONSTANT="!#!"
+@test "Insert issue and accept commit" {
     BRANCH="feature/AS-100-work-branch"
-    COMMIT="$CONSTANT in commit"
+    COMMIT="#! in commit"
 
-    git config extendjira.substitution "$CONSTANT"
-    git checkout -b $BRANCH
-    echo "Simple" >> file
+    install_entrypoint $TEST_ENTRYPOINT .
+    install_hook $TEST_ENTRYPOINT "extendjira.issue"
+    install_hook $TEST_ENTRYPOINT "checkjira.enforcekey"    
 
+    git_first_commit
+    git_dummy
+    git checkout -b $BRANCH > /dev/null 2>&1
+
+    git_change
     run git commit -a -m "$COMMIT"
     echo "status: $status"
     echo "output: $output"
-    [ "$status" -ne 0 ]
+    [ "$status" -eq 0 ]
 }

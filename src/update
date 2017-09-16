@@ -1,0 +1,22 @@
+#!/bin/sh
+
+#
+# Variables
+#
+DIR=$(dirname "$(readlink -f "$0")")
+DIR_HOOKS="$DIR/update.d"
+FILES="$DIR_HOOKS/*.sh"
+
+#
+# Main
+#
+if [ ! -d "$DIR_HOOKS" ]; then
+    exit 0
+fi
+
+for file in $FILES; do
+    if [ -f "$file" ]
+    then
+        sh "$file" "$@" || exit 1
+    fi
+done
