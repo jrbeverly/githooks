@@ -69,7 +69,7 @@ function install_entrypoint() {
 
     mkdir -p "$GIT_HOOK_DIR"
     cp "$dir_src/$entrypoint" "$GIT_HOOK_DIR/$2"    
-    chmod +x "$2"
+    chmod +x "$GIT_HOOK_DIR/$2/$entrypoint" 
 }
 
 function install_hook() {
