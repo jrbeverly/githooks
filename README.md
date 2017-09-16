@@ -6,7 +6,7 @@ GitHooks provides a multi-hook framework for Git Hooks, along with a collection 
  
 ## Getting Started
 
-Git Hooks are event-based scripts you can place in a hooks directory to trigger actions at certain points in git’s execution. When you run certain git commands, the software will run the associated script within the git repository. GitHooks extends on this by converting the associated script to run other scripts. Specifically, each git hook will have an associated directory of scripts. If any scripts are present in the hooks directory, those will be run by the hook.
+Git Hooks are event-based scripts you can place in a hooks directory to trigger actions at certain points in git’s execution. When you run certain git commands, the software will run the associated script within the git repository. GitHooks extends on this by enabling the installation of any arbitrary number of hooks for a command. Specifically, each git hook will have an associated directory of scripts. If any scripts are present in the hooks directory, those will be run by the hook.
 
 ## Installation
 
