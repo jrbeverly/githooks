@@ -37,12 +37,12 @@ fi
 commit_file="$1"
 branch=$(get_current_branch)
 
-if ! $(is_feature_branch "$branch"); then
+if ! is_feature_branch "$branch"; then
     exit 0
 fi
 
 commit=$(cat "$commit_file")
-if $(is_issue_present "$commit"); then
+if is_issue_present "$commit"; then
     exit 0  
 fi
 
