@@ -13,11 +13,11 @@ TEST_ENTRYPOINT="prepare-commit-msg"
 # Setup/Teardown
 #
 function setup() {
-    test_prepare
+    test_setup
 }
 
 function teardown() {
-    test_cleanup
+    test_teardown
 }
 
 #
