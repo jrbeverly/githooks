@@ -29,14 +29,7 @@ function teardown() {
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
-    copy_entrypoint $TEST_ENTRYPOINT .
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
-    git_first_commit
-    git_dummy
-    git checkout -b $BRANCH > /dev/null 2>&1
-
-    git_mock_commit "$COMMIT"
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
     run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
     commit=$(git_mock_commit_message)
 
@@ -51,14 +44,7 @@ function teardown() {
     BRANCH="AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
-    copy_entrypoint $TEST_ENTRYPOINT .
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
-    git_first_commit
-    git_dummy
-    git checkout -b $BRANCH > /dev/null 2>&1
-
-    git_mock_commit "$COMMIT"
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
     run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
     commit=$(git_mock_commit_message)
 
@@ -72,14 +58,7 @@ function teardown() {
     BRANCH="AS-100-work-branch"
     COMMIT=""
 
-    copy_entrypoint $TEST_ENTRYPOINT .
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
-    git_first_commit
-    git_dummy
-    git checkout -b $BRANCH > /dev/null 2>&1
-
-    git_mock_commit "$COMMIT"
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
     run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
     commit=$(git_mock_commit_message)
 
@@ -93,14 +72,7 @@ function teardown() {
     BRANCH="feature/AS-100-work-branch"
     COMMIT=""
 
-    copy_entrypoint $TEST_ENTRYPOINT .
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
-    git_first_commit
-    git_dummy
-    git checkout -b $BRANCH > /dev/null 2>&1
-
-    git_mock_commit "$COMMIT"
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
     run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
     commit=$(git_mock_commit_message)
 
