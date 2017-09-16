@@ -6,7 +6,7 @@
 
 #
 # Pathing
-# 
+#
 
 function get_root_dir() {
     dirname $(dirname $BATS_TEST_DIRNAME)
@@ -52,7 +52,7 @@ function copy_resource() {
 function copy_resource_to_hook() {
     DIR_RESOURCE=$(get_resource_dir)
     HOOK_DIR="$1.d"
-    
+
     cp "$DIR_RESOURCE/$2" "$HOOK_DIR/$2"
 }
 
@@ -71,7 +71,7 @@ function copy_hook() {
 
     DIR_SRC=$(get_source_dir)
     DIR_HOOK="$DIR_SRC/$HOOK_DIR"
-    
+
     mkdir -p "$HOOK_DIR"
     cp "$DIR_HOOK/$2.sh" "$HOOK_DIR/$2.sh"
 }

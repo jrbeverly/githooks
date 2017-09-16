@@ -61,7 +61,7 @@ function teardown() {
     [ "$status" -ne 0 ]
 }
 
-@test "Reject on bad commit" {
+@test "Insert issue and accept commit" {
     echo "Simple" > file
     git add file && git commit -a -m "Init"
 
@@ -69,16 +69,14 @@ function teardown() {
     copy_hook $HOOK_NAME "030-extendjira.issue"
     copy_hook $HOOK_NAME "040-checkjira.enforcekey"    
     
-    CONSTANT="!#!"
     BRANCH="feature/AS-100-work-branch"
-    COMMIT="$CONSTANT in commit"
+    COMMIT="!# in commit"
 
-    git config extendjira.substitution "$CONSTANT"
     git checkout -b $BRANCH
     echo "Simple" >> file
 
-    run git commit -a -m "$COMMIT"
+    run git commit -a -m "AS-100 in commit"
     echo "status: $status"
     echo "output: $output"
-    [ "$status" -ne 0 ]
+    [ "$status" -eq 0 ]
 }

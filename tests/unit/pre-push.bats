@@ -23,7 +23,7 @@ function teardown() {
 
 @test "No hook directory" {
     copy_script $HOOK_NAME $HOOK_NAME
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
@@ -33,7 +33,7 @@ function teardown() {
 @test "Empty hook directory" {
     copy_script $HOOK_NAME $HOOK_NAME
     touch_hook $HOOK_NAME
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
@@ -44,7 +44,7 @@ function teardown() {
     copy_script $HOOK_NAME $HOOK_NAME
     touch_hook $HOOK_NAME
     copy_resource_to_hook $HOOK_NAME "hello.sh"
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
@@ -56,7 +56,7 @@ function teardown() {
     copy_script $HOOK_NAME $HOOK_NAME
     touch_hook $HOOK_NAME
     copy_resource_to_hook $HOOK_NAME "hello.sh"
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
@@ -69,7 +69,7 @@ function teardown() {
     touch_hook $HOOK_NAME
     copy_resource_to_hook $HOOK_NAME "hello.sh"
     copy_resource_to_hook $HOOK_NAME "world.sh"
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
@@ -82,7 +82,7 @@ function teardown() {
     copy_script $HOOK_NAME $HOOK_NAME
     touch_hook $HOOK_NAME
     copy_resource_to_hook $HOOK_NAME "echo.sh"
-    
+
     my_echo="ECHO ECHO ECHO"
 
     run sh $HOOK_NAME "$my_echo"
@@ -97,7 +97,7 @@ function teardown() {
     touch_hook $HOOK_NAME
     copy_resource_to_hook $HOOK_NAME "001-script.sh"
     copy_resource_to_hook $HOOK_NAME "999-script.sh"
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
@@ -114,7 +114,7 @@ function teardown() {
     copy_resource_to_hook $HOOK_NAME "010-script.sh"
     copy_resource_to_hook $HOOK_NAME "021-script.sh"
     copy_resource_to_hook $HOOK_NAME "999-script.sh"
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"
@@ -132,7 +132,7 @@ function teardown() {
     copy_resource_to_hook $HOOK_NAME "010-script.sh"
     copy_resource_to_hook $HOOK_NAME "020-error.sh"
     copy_resource_to_hook $HOOK_NAME "021-script.sh"
-    
+
     run sh $HOOK_NAME
     echo "status: $status"
     echo "output: $output"

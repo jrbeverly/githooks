@@ -29,7 +29,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
@@ -44,14 +44,14 @@ function teardown() {
     [ "$status" -eq 0 ]
     [[ "$output" == "AS-100 Commit has no issue id" ]]
 }
-    
+
 
 @test "Replace using custom constant" {
     init_commit
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="!!!! Commit has no issue id"
 
@@ -73,7 +73,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
@@ -94,7 +94,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
@@ -116,7 +116,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
@@ -138,7 +138,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="!##! Commit has no issue id"
 
@@ -160,7 +160,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
