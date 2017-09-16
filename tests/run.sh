@@ -9,5 +9,12 @@ command -v bats >/dev/null 2>&1 || { echo >&2 "The script requires 'bats' but it
 #
 # Main
 #
+sh "$DIR/entrypoint/run.sh"
+echo
+echo
+
 sh "$DIR/unit/run.sh"
+echo
+echo
+
 sh "$DIR/integration/run.sh"

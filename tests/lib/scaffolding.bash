@@ -4,8 +4,9 @@
 # Testing Scaffolding
 #
 
-function test_prepare() {
+function test_setup() {
     test_path="$(get_target_dir)/${BATS_TEST_NAME}"
+    rm -rf "$test_path"
 
     mkdir -p "$test_path"
     cd "$test_path"
@@ -13,6 +14,6 @@ function test_prepare() {
     git_init
 }
 
-function test_cleanup() {
+function test_teardown() {
     rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
 }

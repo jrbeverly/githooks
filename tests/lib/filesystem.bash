@@ -55,3 +55,30 @@ function copy_hook() {
     mkdir -p "$dir_hooks"
     cp "$dir_src/$dir_hooks/"*"-$hook.sh" "$dir_hooks/"
 }
+
+
+#
+#
+#
+
+function install_entrypoint() {
+    entrypoint="$1"
+    path="$2"
+
+    dir_src="$(get_source_dir)"
+
+    mkdir -p "$GIT_HOOK_DIR"
+    cp "$dir_src/$entrypoint" "$GIT_HOOK_DIR/$2"    
+    chmod +x "$2"
+}
+
+function install_hook() {
+    entrypoint="$1"
+    hook="$2"
+
+    dir_src="$(get_source_dir)"
+    dir_hooks="$entrypoint.d"
+
+    mkdir -p "$GIT_HOOK_DIR/$dir_hooks"
+    cp "$dir_src/$dir_hooks/"*"-$hook.sh" "$GIT_HOOK_DIR/$dir_hooks/"
+}
