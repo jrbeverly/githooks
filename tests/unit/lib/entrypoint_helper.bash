@@ -32,10 +32,6 @@ function get_resource_dir() {
 #
 #
 
-function new_uuid() {
-    cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1
-}
-
 function test_setup() {
     test_path="$(get_target_dir)/${BATS_TEST_NAME}"
 
@@ -45,10 +41,6 @@ function test_setup() {
 
 function test_teardown() {
     rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
-}
-
-function clean() {
-    rm -rf "$(get_target_dir)/*"
 }
 
 function copy_resource() {
