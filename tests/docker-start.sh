@@ -20,5 +20,5 @@ echo "/***********************************************/"
 echo
 docker run --rm -it \
     -v "$DIR_ROOT":/media \
-    --entrypoint sh \
+    --entrypoint bash \
     dduportal/bats
