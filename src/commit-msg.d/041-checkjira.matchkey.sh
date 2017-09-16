@@ -3,7 +3,7 @@
 #
 # Variables
 #
-JIRA_ISSUE_REGEX='[A-Z]\+-[0-9]\+' 
+JIRA_ISSUE_REGEX='[A-Z]\+-[0-9]\+'
 GIT_FEATURE_REGEX='feature/'
 
 #
@@ -43,8 +43,8 @@ fi
 
 commit=$(cat "$commit_file")
 if is_issue_present "$commit"; then
-    exit 0  
+    exit 0
 fi
 
-echo "No JIRA ticket present in the commit message. Please include the JIRA ticket key." >&2 
+echo "No JIRA ticket present in the commit message. Please include the JIRA ticket key." >&2
 exit 1

@@ -23,7 +23,7 @@ function teardown() {
 
 @test "No hook directory" {
     copy_entrypoint $TEST_ENTRYPOINT
-    
+
     echo "Simple" > file
     git add file
 
@@ -35,7 +35,7 @@ function teardown() {
 
 @test "Empty hook directory" {
     copy_entry $TEST_ENTRYPOINT
-    
+
     echo "Simple" > file
     git add file
 
@@ -48,7 +48,7 @@ function teardown() {
 @test "Simple hook" {
     copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "hello.sh"
-    
+
     echo "Simple" > file
     git add file
 
@@ -93,7 +93,7 @@ function teardown() {
     copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "001-script.sh"
     copy_resource $TEST_ENTRYPOINT "999-script.sh"
-    
+
     echo "Simple" > file
     git add file
 
@@ -112,7 +112,7 @@ function teardown() {
     copy_resource $TEST_ENTRYPOINT "010-script.sh"
     copy_resource $TEST_ENTRYPOINT "021-script.sh"
     copy_resource $TEST_ENTRYPOINT "999-script.sh"
-    
+
     echo "Simple" > file
     git add file
 
@@ -131,8 +131,8 @@ function teardown() {
     copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "010-script.sh"
     copy_resource $TEST_ENTRYPOINT "020-error.sh"
-    copy_resource $TEST_ENTRYPOINT "021-script.sh"  
-    
+    copy_resource $TEST_ENTRYPOINT "021-script.sh"
+
     echo "Simple" > file
     git add file
 

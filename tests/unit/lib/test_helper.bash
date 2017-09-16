@@ -2,7 +2,7 @@
 
 #
 # Pathing
-# 
+#
 
 function get_root_dir() {
     dirname $(dirname $BATS_TEST_DIRNAME)
@@ -29,18 +29,18 @@ function copy_entrypoint() {
 
     DIR_SRC="$(get_source_dir)"
     DIR_HOOKS="$ENTRYPOINT.d"
-    
+
     cp "$DIR_SRC/$ENTRYPOINT" ".git/hooks/$ENTRYPOINT"
-    chmod +x ".git/hooks/$ENTRYPOINT" 
+    chmod +x ".git/hooks/$ENTRYPOINT"
 }
 
 function copy_resource() {
     ENTRYPOINT="$1"
     RESOURCE="$2"
-    
+
     DIR_RESOURCE="$(get_resource_dir)"
     DIR_HOOKS="$ENTRYPOINT.d"
-    
+
     cp "$DIR_RESOURCE/$RESOURCE" ".git/hooks/$DIR_HOOKS/$RESOURCE"
 }
 
@@ -52,10 +52,10 @@ function copy_script() {
 function copy_hook() {
     ENTRYPOINT="$1"
     HOOK="$2"
-    
+
     DIR_SRC="$(get_source_dir)"
     DIR_HOOKS="$ENTRYPOINT.d"
-    
+
     cp "$DIR_SRC/$DIR_HOOKS/$HOOK.sh" ".git/hooks/$DIR_HOOKS/$HOOK.sh"
 }
 
@@ -63,7 +63,7 @@ function copy_entry() {
     ENTRYPOINT="$1"
 
     copy_entrypoint "$ENTRYPOINT"
-    mkdir -p ".git/hooks/$DIR_HOOKS"    
+    mkdir -p ".git/hooks/$DIR_HOOKS"
 }
 
 #
@@ -81,7 +81,7 @@ function test_setup() {
     git config user.name "test" > /dev/null 2>&1
 }
 
-function test_teardown() {  
+function test_teardown() {
     rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
 }
 

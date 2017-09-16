@@ -3,7 +3,7 @@
 #
 # Variables
 #
-JIRA_ISSUE_REGEX='[A-Z]\+-[0-9]\+' 
+JIRA_ISSUE_REGEX='[A-Z]\+-[0-9]\+'
 GIT_FEATURE_REGEX='feature/'
 DEFAULT_CONSTANT="#!"
 

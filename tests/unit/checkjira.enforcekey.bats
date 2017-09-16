@@ -28,7 +28,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
@@ -48,7 +48,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
@@ -68,7 +68,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="AS-100 is valid"
 
@@ -86,7 +86,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="AS-101 is different but valid"
 
@@ -104,7 +104,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="A commit, but in a different spot: AS-100"
 
@@ -122,7 +122,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
@@ -140,7 +140,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
@@ -158,7 +158,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="-100 Commit has no issue id"
 
@@ -176,7 +176,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="AS- Commit has no issue id"
 
@@ -194,7 +194,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="AS100 Commit has no issue id"
 
@@ -212,7 +212,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="AS--100 Commit has no issue id"
 
@@ -230,7 +230,7 @@ function teardown() {
 
     copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-    
+
     BRANCH="feature/AS-100-work-branch"
     COMMIT="AS 100 Commit has no issue id"
 
