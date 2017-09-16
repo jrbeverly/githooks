@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-load "lib/test_helper"
+load "lib/entrypoint_helper"
 
 #
 # Variables
