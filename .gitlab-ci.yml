@@ -9,6 +9,9 @@ stages:
   - test
   - deploy
 
+variables:
+  CI: true
+
 # ----------------------------------------
 # Prescript
 # ----------------------------------------
@@ -30,14 +33,26 @@ build:
 # Tests
 # ----------------------------------------
 
+test-entrypoint:
+  stage: test
+  image: jrbeverly/bats:baseimage
+  script:
+    - sh .docker/provision.sh
+    - sh tests/integration/run.sh
+  dependencies:
+    - build
+  only:
+    - web
+    - master
+
 test-unit:
   stage: test
   image: jrbeverly/bats:baseimage
   script:
-    - apk add -U git
+    - sh .docker/provision.sh
     - sh tests/unit/run.sh
   dependencies:
-    - build
+    - test-entrypoint
   only:
     - web
     - master
@@ -46,10 +61,10 @@ test-integration:
   stage: test
   image: jrbeverly/bats:baseimage
   script:
-    - apk add -U git
+    - sh .docker/provision.sh
     - sh tests/integration/run.sh
   dependencies:
-    - build
+    - test-unit
   only:
     - web
     - master
@@ -61,14 +76,12 @@ test-integration:
 deploy:
   stage: deploy
   script:
-    - echo "Packaging up hooks"
+    - apk add -U zip
+    - sh build/package.sh
   artifacts:
     expire_in: 4 weeks
     paths:
-      - src/*
-  dependencies:
-    - test-unit
-    - test-integration
+      - out/githooks*.zip
   only:
     - web
     - master

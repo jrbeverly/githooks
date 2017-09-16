@@ -65,16 +65,14 @@ The packaged hooks are available under `out/githooks*.zip`, suffixed with the ve
 
 ## Tests
 
-All scripts in the repository use [Bash Automated Testing System (Bats)](https://github.com/sstephenson/bats) for testing. All scripts have unit tests associated with them in the `tests/unit/` directory. These scripts are responsible for verifying the execution behaviour of any of the hooks in the repositroy. You can run the unit tests with the `run.sh` script in the `tests/unit/` directory.
+All scripts in the repository use [Bash Automated Testing System (Bats)](https://github.com/sstephenson/bats) for testing. All scripts have unit tests associated with them in the `tests/` directory. These scripts are responsible for verifying the execution behaviour of any of the hooks in the repositroy. You can run the unit tests with the `run.sh` script in the `tests/` directory.
 
 ```bash
 sh run.sh
 ```
 
-Or you can use the docker based script, `docker-run.sh` if you do not have the necessary commands installed locally on your machine. You can do this with the following:
+Or you can use the docker based script, `docker-run.sh` (`docker-run.sh`) if you do not have the necessary commands installed locally on your machine. You can do this with the following:
 
 ```bash
 sh docker-run.sh
 ```
-
-The integration tests in the `tests/integration/` directory are responsible for testing interactions between multiple scripts. The `run.sh` and `docker-run.sh` scripts will run all tests in the current directory and subdirectories. 

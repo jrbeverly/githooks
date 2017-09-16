@@ -10,15 +10,15 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "The script requires 'docker' bu
 #
 # Main
 #
-docker pull dduportal/bats
+docker pull jrbeverly/bats:baseimage
 
 echo
 echo "/***********************************************/"
-echo "/* Please run 'sh tests/.docker/provision.sh'  */"
+echo "/* Please run 'sh .docker/provision.sh'  */"
 echo "/* before attempting to run any tests          */"
 echo "/***********************************************/"
 echo
 docker run --rm -it \
+    -e CI="true" \
     -v "$DIR_ROOT":/media \
-    --entrypoint bash \
-    dduportal/bats
+    jrbeverly/bats:baseimage bash

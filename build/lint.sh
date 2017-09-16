@@ -60,4 +60,12 @@ for primary_hook in $FILES; do
     fi
 done
 
+if [ $err -ne 0 ]; then
+    echo
+    echo "Build failed. See errors above."
+else
+    echo
+    echo "Build passed."
+fi 
+
 exit $err

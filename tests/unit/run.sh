@@ -33,7 +33,7 @@ for file in "$DIR/"*.bats; do
         echo "/********************************/"
         echo "/* Running $testname tests."
         echo "/********************************/"
-        bats --pretty "$file"
+        bats "$file"
 
     fi
 done
