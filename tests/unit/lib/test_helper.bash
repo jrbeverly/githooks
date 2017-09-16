@@ -29,33 +29,6 @@ function get_resource_dir() {
 }
 
 #
-#
-#
-
-function copy_resource() {
-    DIR_RESOURCE=$(get_resource_dir)
-
-    cp "$DIR_RESOURCE/$1" "$2"
-}
-
-function copy_resource_to_hook() {
-    DIR_RESOURCE=$(get_resource_dir)
-    HOOK_DIR="$1.d"
-    
-    cp "$DIR_RESOURCE/$2" "$HOOK_DIR/$2"
-}
-
-function copy_script() {
-    DIR_SRC=$(get_source_dir)
-    cp "$DIR_SRC/$1" "$2"
-}
-
-function touch_hook() {
-    HOOK_DIR="$1.d"
-    mkdir -p ".git/hooks/$HOOK_DIR"
-}
-
-#
 # Testing Scaffolding
 #
 
@@ -91,24 +64,45 @@ function dummy_commit() {
 #
 # Testing Helpers
 #
-
-function init_hook() {
+function copy_entrypoint() {
     ENTRYPOINT="$1"
 
-    DIR_SRC=$(get_source_dir)
+    DIR_SRC="$(get_source_dir)"
     DIR_HOOKS="$ENTRYPOINT.d"
     
     cp "$DIR_SRC/$ENTRYPOINT" ".git/hooks/$ENTRYPOINT"
-    chmod +x ".git/hooks/$ENTRYPOINT"
-    mkdir -p ".git/hooks/$DIR_HOOKS"    
+    chmod +x ".git/hooks/$ENTRYPOINT" 
+}
+
+function copy_resource() {
+    ENTRYPOINT="$1"
+    RESOURCE="$2"
+    
+    DIR_RESOURCE="$(get_resource_dir)"
+    DIR_HOOKS="$ENTRYPOINT.d"
+    
+    cp "$DIR_RESOURCE/$RESOURCE" ".git/hooks/$DIR_HOOKS/$RESOURCE"
+}
+
+function copy_script() {
+    DIR_SRC=$(get_source_dir)
+    cp "$DIR_SRC/$1" "$2"
 }
 
 function copy_hook() {
     ENTRYPOINT="$1"
     HOOK="$2"
     
-    DIR_SRC=$(get_source_dir)
+    DIR_SRC="$(get_source_dir)"
     DIR_HOOKS="$ENTRYPOINT.d"
     
     cp "$DIR_SRC/$DIR_HOOKS/$HOOK.sh" ".git/hooks/$DIR_HOOKS/$HOOK.sh"
+}
+
+
+function init_hook() {
+    ENTRYPOINT="$1"
+
+    copy_entrypoint "$ENTRYPOINT"
+    mkdir -p ".git/hooks/$DIR_HOOKS"    
 }
