@@ -34,7 +34,7 @@ function teardown() {
 }
 
 @test "Empty hook directory" {
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     
     echo "Simple" > file
     git add file
@@ -46,7 +46,7 @@ function teardown() {
 }
 
 @test "Simple hook" {
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "hello.sh"
     
     echo "Simple" > file
@@ -60,7 +60,7 @@ function teardown() {
 }
 
 @test "Multiple hooks" {
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "hello.sh"
     copy_resource $TEST_ENTRYPOINT "world.sh"
 
@@ -76,7 +76,7 @@ function teardown() {
 }
 
 @test "Test parameter passing" {
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "echo.sh"
 
     echo "Simple" > file
@@ -90,7 +90,7 @@ function teardown() {
 }
 
 @test "Simple hook ordering" {
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "001-script.sh"
     copy_resource $TEST_ENTRYPOINT "999-script.sh"
     
@@ -106,7 +106,7 @@ function teardown() {
 }
 
 @test "Hook ordering" {
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "001-script.sh"
     copy_resource $TEST_ENTRYPOINT "009-script.sh"
     copy_resource $TEST_ENTRYPOINT "010-script.sh"
@@ -128,7 +128,7 @@ function teardown() {
 }
 
 @test "Terminate on error" {
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_resource $TEST_ENTRYPOINT "010-script.sh"
     copy_resource $TEST_ENTRYPOINT "020-error.sh"
     copy_resource $TEST_ENTRYPOINT "021-script.sh"  

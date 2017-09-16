@@ -1,10 +1,6 @@
 #!/bin/bash
 
 #
-# Variables
-#
-
-#
 # Pathing
 # 
 
@@ -28,42 +24,6 @@ function get_resource_dir() {
     echo "$(get_test_dir)/resources"
 }
 
-#
-# Testing Scaffolding
-#
-
-function test_setup() {
-    test_path="$(get_target_dir)/${BATS_TEST_NAME}"
-
-    mkdir -p "$test_path"
-    cd "$test_path"
-
-    git init > /dev/null 2>&1
-    git config user.email "test@test.com" > /dev/null 2>&1
-    git config user.name "test" > /dev/null 2>&1
-}
-
-function test_teardown() {  
-    rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
-}
-
-#
-# Git Helpers
-#
-function init_commit() {
-    echo "Simple" > file
-    git add file > /dev/null 2>&1
-    git commit -a -m "Init" > /dev/null 2>&1
-}
-
-function dummy_commit() {
-    echo "Simple" >> file
-    git commit -a -m "Dummy" > /dev/null 2>&1
-}
-
-#
-# Testing Helpers
-#
 function copy_entrypoint() {
     ENTRYPOINT="$1"
 
@@ -99,10 +59,42 @@ function copy_hook() {
     cp "$DIR_SRC/$DIR_HOOKS/$HOOK.sh" ".git/hooks/$DIR_HOOKS/$HOOK.sh"
 }
 
-
-function init_hook() {
+function copy_entry() {
     ENTRYPOINT="$1"
 
     copy_entrypoint "$ENTRYPOINT"
     mkdir -p ".git/hooks/$DIR_HOOKS"    
+}
+
+#
+# Testing Scaffolding
+#
+
+function test_setup() {
+    test_path="$(get_target_dir)/${BATS_TEST_NAME}"
+
+    mkdir -p "$test_path"
+    cd "$test_path"
+
+    git init > /dev/null 2>&1
+    git config user.email "test@test.com" > /dev/null 2>&1
+    git config user.name "test" > /dev/null 2>&1
+}
+
+function test_teardown() {  
+    rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
+}
+
+#
+# Git Helpers
+#
+function init_commit() {
+    echo "Simple" > file
+    git add file > /dev/null 2>&1
+    git commit -a -m "Init" > /dev/null 2>&1
+}
+
+function dummy_commit() {
+    echo "Simple" >> file
+    git commit -a -m "Dummy" > /dev/null 2>&1
 }

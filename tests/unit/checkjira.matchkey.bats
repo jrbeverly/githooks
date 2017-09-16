@@ -25,7 +25,7 @@ function teardown() {
 @test "Commit has exact issue id" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -43,7 +43,7 @@ function teardown() {
 @test "Commit has an issue id" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -61,7 +61,7 @@ function teardown() {
 @test "Issue ID is last but valid" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -79,7 +79,7 @@ function teardown() {
 @test "Branch is not feature" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="AS-100-work-branch"
@@ -97,7 +97,7 @@ function teardown() {
 @test "Reject commit with no issue ID" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -115,7 +115,7 @@ function teardown() {
 @test "Reject commit with no key" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -133,7 +133,7 @@ function teardown() {
 @test "Reject commit with no number" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -151,7 +151,7 @@ function teardown() {
 @test "Reject commit with bad format" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -169,7 +169,7 @@ function teardown() {
 @test "Reject commit with bad separation formating" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
@@ -187,7 +187,7 @@ function teardown() {
 @test "Reject commit with bad spacing" {
     init_commit
 
-    init_hook $TEST_ENTRYPOINT
+    copy_entry $TEST_ENTRYPOINT
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
