@@ -7,8 +7,10 @@ command -v zip >/dev/null 2>&1 || { echo >&2 "The script requires 'zip' but it's
 DIR=$(dirname "$(readlink -f "$0")")
 DIR_ROOT=$(dirname "$DIR")
 DIR_SRC="$DIR_ROOT/src"
+DIR_BUILD="$DIR_ROOT/build"
 DIR_OUT="$DIR_ROOT/out"
-RELEASE="githooks.zip"
+VERSION=$(cat "$DIR_BUILD/VERSION")
+RELEASE="githooks-$VERSION.zip"
 
 #
 # Main
