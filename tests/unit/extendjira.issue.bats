@@ -8,7 +8,7 @@ load "lib/unit"
 # Variables
 #
 TEST_ENTRYPOINT="commit-msg"
-TEST_HOOK="030-extendjira.issue"
+TEST_HOOK="extendjira.issue"
 TEST_CONFIG_HOOK="extendjira.subkey"
 TEST_DEFAULT_CONSTANT="#!"
 
@@ -28,154 +28,119 @@ function teardown() {
 #
 
 @test "Replace using default constant" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
 
-    git commit -a -m "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == "AS-100 Commit has no issue id" ]]
+    [[ "$commit" == "AS-100 Commit has no issue id" ]]
 }
 
 
 @test "Replace using custom constant" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT="!!!! Commit has no issue id"
 
     git config --add "$TEST_CONFIG_HOOK" "!!!!"
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
 
-    git commit -a -m "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == "AS-100 Commit has no issue id" ]]
+    [[ "$commit" == "AS-100 Commit has no issue id" ]]
 }
 
 @test "Branch is not feature" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
 
-    git commit -a -m "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == $COMMIT ]]
+    [[ "$commit" == $COMMIT ]]
 }
 
 @test "Custom constant while using default constant" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
     git config --add "$TEST_CONFIG_HOOK" "!!!!"
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
 
-    git commit -a -m "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == $COMMIT ]]
+    [[ "$commit" == $COMMIT ]]
 }
 
 @test "Commit has nothing to replace" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
     git config --add "$TEST_CONFIG_HOOK" "!!!!"
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
 
-    git commit -a -m "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == $COMMIT ]]
+    [[ "$commit" == $COMMIT ]]
 }
 
 @test "Incorrect constant placement" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT="!##! Commit has no issue id"
 
     git config --add "$TEST_CONFIG_HOOK" "!#!"
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
 
-    git commit -a -m "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == $COMMIT ]]
+    [[ "$commit" == $COMMIT ]]
 }
 
 @test "Partial constant in text" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT="#! Commit has no issue id"
 
     git config --add "$TEST_CONFIG_HOOK" "!#!"
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
 
-    git commit -a -m "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == $COMMIT ]]
+    [[ "$commit" == $COMMIT ]]
 }
