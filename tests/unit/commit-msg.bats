@@ -4,7 +4,7 @@ load "lib/test_helper"
 #
 # Variables
 #
-HOOK_NAME="commit-msg"
+TEST_ENTRYPOINT="commit-msg"
 
 #
 # Setup/Teardown
@@ -22,55 +22,52 @@ function teardown() {
 #
 
 @test "No hook directory" {
-    copy_script $HOOK_NAME $HOOK_NAME
+    copy_entrypoint $TEST_ENTRYPOINT
     
-    run sh $HOOK_NAME
+    echo "Simple" > file
+    git add file
+
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
 }
 
 @test "Empty hook directory" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
+    copy_entry $TEST_ENTRYPOINT
     
-    run sh $HOOK_NAME
+    echo "Simple" > file
+    git add file
+
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
 }
 
 @test "Simple hook" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "hello.sh"
+    copy_entry $TEST_ENTRYPOINT
+    copy_resource $TEST_ENTRYPOINT "hello.sh"
     
-    run sh $HOOK_NAME
-    echo "status: $status"
-    echo "output: $output"
-    [ "$status" -eq 0 ]
-    [[ "$output" == "Hello World" ]]
-}
+    echo "Simple" > file
+    git add file
 
-@test "Simple hook" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "hello.sh"
-    
-    run sh $HOOK_NAME
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
-    [[ "$output" == "Hello" ]]
+    [[ "${lines[0]}" == "Hello" ]]
 }
 
 @test "Multiple hooks" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "hello.sh"
-    copy_resource_to_hook $HOOK_NAME "world.sh"
-    
-    run sh $HOOK_NAME
+    copy_entry $TEST_ENTRYPOINT
+    copy_resource $TEST_ENTRYPOINT "hello.sh"
+    copy_resource $TEST_ENTRYPOINT "world.sh"
+
+    echo "Simple" > file
+    git add file
+
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
@@ -79,26 +76,28 @@ function teardown() {
 }
 
 @test "Test parameter passing" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "echo.sh"
-    
-    my_echo="ECHO ECHO ECHO"
+    copy_entry $TEST_ENTRYPOINT
+    copy_resource $TEST_ENTRYPOINT "echo.sh"
 
-    run sh $HOOK_NAME "$my_echo"
+    echo "Simple" > file
+    git add file
+
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
-    [[ "$output" == "$my_echo" ]]
+    [[ "${lines[0]}" == *"COMMIT_EDITMSG" ]]
 }
 
 @test "Simple hook ordering" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "001-script.sh"
-    copy_resource_to_hook $HOOK_NAME "999-script.sh"
+    copy_entry $TEST_ENTRYPOINT
+    copy_resource $TEST_ENTRYPOINT "001-script.sh"
+    copy_resource $TEST_ENTRYPOINT "999-script.sh"
     
-    run sh $HOOK_NAME
+    echo "Simple" > file
+    git add file
+
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
@@ -107,15 +106,17 @@ function teardown() {
 }
 
 @test "Hook ordering" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "001-script.sh"
-    copy_resource_to_hook $HOOK_NAME "009-script.sh"
-    copy_resource_to_hook $HOOK_NAME "010-script.sh"
-    copy_resource_to_hook $HOOK_NAME "021-script.sh"
-    copy_resource_to_hook $HOOK_NAME "999-script.sh"
+    copy_entry $TEST_ENTRYPOINT
+    copy_resource $TEST_ENTRYPOINT "001-script.sh"
+    copy_resource $TEST_ENTRYPOINT "009-script.sh"
+    copy_resource $TEST_ENTRYPOINT "010-script.sh"
+    copy_resource $TEST_ENTRYPOINT "021-script.sh"
+    copy_resource $TEST_ENTRYPOINT "999-script.sh"
     
-    run sh $HOOK_NAME
+    echo "Simple" > file
+    git add file
+
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 0 ]
@@ -127,13 +128,15 @@ function teardown() {
 }
 
 @test "Terminate on error" {
-    copy_script $HOOK_NAME $HOOK_NAME
-    touch_hook $HOOK_NAME
-    copy_resource_to_hook $HOOK_NAME "010-script.sh"
-    copy_resource_to_hook $HOOK_NAME "020-error.sh"
-    copy_resource_to_hook $HOOK_NAME "021-script.sh"
+    copy_entry $TEST_ENTRYPOINT
+    copy_resource $TEST_ENTRYPOINT "010-script.sh"
+    copy_resource $TEST_ENTRYPOINT "020-error.sh"
+    copy_resource $TEST_ENTRYPOINT "021-script.sh"  
     
-    run sh $HOOK_NAME
+    echo "Simple" > file
+    git add file
+
+    run git commit -a -m "Dummy"
     echo "status: $status"
     echo "output: $output"
     [ "$status" -eq 1 ]

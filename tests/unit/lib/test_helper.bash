@@ -1,10 +1,6 @@
 #!/bin/bash
 
 #
-# Variables
-#
-
-#
 # Pathing
 # 
 
@@ -28,40 +24,24 @@ function get_resource_dir() {
     echo "$(get_test_dir)/resources"
 }
 
-#
-#
-#
+function copy_entrypoint() {
+    ENTRYPOINT="$1"
 
-function new_uuid() {
-    cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 4 | head -n 1
-}
-
-function test_setup() {
-    test_path="$(get_target_dir)/${BATS_TEST_NAME}"
-
-    mkdir -p "$test_path"
-    cd "$test_path"
-}
-
-function test_teardown() {
-    rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
-}
-
-function clean() {
-    rm -rf "$(get_target_dir)/*"
+    DIR_SRC="$(get_source_dir)"
+    DIR_HOOKS="$ENTRYPOINT.d"
+    
+    cp "$DIR_SRC/$ENTRYPOINT" ".git/hooks/$ENTRYPOINT"
+    chmod +x ".git/hooks/$ENTRYPOINT" 
 }
 
 function copy_resource() {
-    DIR_RESOURCE=$(get_resource_dir)
-
-    cp "$DIR_RESOURCE/$1" "$2"
-}
-
-function copy_resource_to_hook() {
-    DIR_RESOURCE=$(get_resource_dir)
-    HOOK_DIR="$1.d"
+    ENTRYPOINT="$1"
+    RESOURCE="$2"
     
-    cp "$DIR_RESOURCE/$2" "$HOOK_DIR/$2"
+    DIR_RESOURCE="$(get_resource_dir)"
+    DIR_HOOKS="$ENTRYPOINT.d"
+    
+    cp "$DIR_RESOURCE/$RESOURCE" ".git/hooks/$DIR_HOOKS/$RESOURCE"
 }
 
 function copy_script() {
@@ -69,17 +49,52 @@ function copy_script() {
     cp "$DIR_SRC/$1" "$2"
 }
 
-function touch_hook() {
-    HOOK_DIR="$1.d"
-    mkdir -p "$HOOK_DIR"
+function copy_hook() {
+    ENTRYPOINT="$1"
+    HOOK="$2"
+    
+    DIR_SRC="$(get_source_dir)"
+    DIR_HOOKS="$ENTRYPOINT.d"
+    
+    cp "$DIR_SRC/$DIR_HOOKS/$HOOK.sh" ".git/hooks/$DIR_HOOKS/$HOOK.sh"
 }
 
-function copy_hook() {
-    HOOK_DIR="$1.d"
+function copy_entry() {
+    ENTRYPOINT="$1"
 
-    DIR_SRC=$(get_source_dir)
-    DIR_HOOK="$DIR_SRC/$HOOK_DIR"
-    
-    mkdir -p "$HOOK_DIR"
-    cp "$DIR_HOOK/$2.sh" "$HOOK_DIR/$2.sh"
+    copy_entrypoint "$ENTRYPOINT"
+    mkdir -p ".git/hooks/$DIR_HOOKS"    
+}
+
+#
+# Testing Scaffolding
+#
+
+function test_setup() {
+    test_path="$(get_target_dir)/${BATS_TEST_NAME}"
+
+    mkdir -p "$test_path"
+    cd "$test_path"
+
+    git init > /dev/null 2>&1
+    git config user.email "test@test.com" > /dev/null 2>&1
+    git config user.name "test" > /dev/null 2>&1
+}
+
+function test_teardown() {  
+    rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
+}
+
+#
+# Git Helpers
+#
+function init_commit() {
+    echo "Simple" > file
+    git add file > /dev/null 2>&1
+    git commit -a -m "Init" > /dev/null 2>&1
+}
+
+function dummy_commit() {
+    echo "Simple" >> file
+    git commit -a -m "Dummy" > /dev/null 2>&1
 }
