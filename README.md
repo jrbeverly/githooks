@@ -78,3 +78,7 @@ Or you can use the docker based script, `docker-run.sh` if you do not have the n
 ```bash
 sh docker-run.sh
 ```
+
+## Acknowledgements
+
+The project icon is by [Mario Gallego Adán from the Noun Project](docs/icon/README.md).
