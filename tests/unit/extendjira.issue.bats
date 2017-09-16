@@ -68,6 +68,27 @@ function teardown() {
     [[ "$output" == "AS-100 Commit has no issue id" ]]
 }
 
+@test "Branch is not feature" {
+    init_commit
+
+    copy_entry $TEST_ENTRYPOINT
+    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
+    
+    BRANCH="AS-100-work-branch"
+    COMMIT="!# Commit has no issue id"
+
+    git checkout -b $BRANCH > /dev/null 2>&1
+    echo "Simple" >> file
+
+    git commit -a -m "$COMMIT"
+
+    run git log -1 --pretty=%B
+    echo "status: $status"
+    echo "output: $output"
+    [ "$status" -eq 0 ]
+    [[ "$output" == $COMMIT ]]
+}
+
 @test "Custom constant while using default constant" {
     init_commit
 
