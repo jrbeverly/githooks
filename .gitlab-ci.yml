@@ -5,11 +5,11 @@ image: alpine:latest
 # ---------------------------------------
 
 stages:
-  - build
-  - test_entry
-  - test_unit
-  - test_integration
-  - deploy
+  - "Build"
+  - "Tests"
+  - "Unit Tests"
+  - "Integration Tests"
+  - "Deploy"
 
 variables:
   CI: "true"
@@ -23,7 +23,7 @@ variables:
 # ----------------------------------------
 
 build:
-  stage: build
+  stage: "Build"
   image: davidhrbac/docker-shellcheck
   script:
     - sh build/lint.sh
@@ -36,7 +36,7 @@ build:
 # ----------------------------------------
 
 test-entrypoint:
-  stage: test_entry
+  stage: "Tests"
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
@@ -48,7 +48,7 @@ test-entrypoint:
     - master
 
 test-unit:
-  stage: test_unit
+  stage: "Unit Tests"
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
@@ -60,7 +60,7 @@ test-unit:
     - master
 
 test-integration:
-  stage: test_integration
+  stage: "Integration Tests"
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
@@ -76,7 +76,7 @@ test-integration:
 # ----------------------------------------
 
 deploy:
-  stage: deploy
+  stage: "Deploy"
   script:
     - apk add -U zip
     - sh build/package.sh
