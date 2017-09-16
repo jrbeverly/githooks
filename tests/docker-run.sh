@@ -10,6 +10,8 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "The script requires 'docker' bu
 #
 # Main
 #
-docker run --rm \
+docker pull jrbeverly/bats:baseimage
+
+docker run --rm -it \
     -v "$DIR_ROOT":/media \
-    jrbeverly/bats:baseimage sh tests/run.sh
+    jrbeverly/bats:baseimage bash .docker/provision.sh && bash tests/run.sh

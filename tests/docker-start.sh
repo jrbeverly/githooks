@@ -10,7 +10,7 @@ command -v docker >/dev/null 2>&1 || { echo >&2 "The script requires 'docker' bu
 #
 # Main
 #
-docker pull dduportal/bats
+docker pull jrbeverly/bats:baseimage
 
 echo
 echo "/***********************************************/"
@@ -20,6 +20,4 @@ echo "/***********************************************/"
 echo
 docker run --rm -it \
     -v "$DIR_ROOT":/media \
-    --workdir /media \
-    --entrypoint bash \
-    dduportal/bats
+    jrbeverly/bats:baseimage bash
