@@ -1,2 +1,4 @@
 #!/bin/sh
-apk add -U git
+
+apt-get update
+apt-get install -y git
