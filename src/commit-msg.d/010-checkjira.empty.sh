@@ -5,7 +5,6 @@
 #
 JIRA_ISSUE_REGEX='[A-Z]\+-[0-9]\+'
 GIT_FEATURE_REGEX='feature/'
-DEFAULT_CONSTANT="#!"
 
 #
 #
@@ -13,10 +12,6 @@ DEFAULT_CONSTANT="#!"
 #
 get_current_branch() {
     git rev-parse --abbrev-ref HEAD
-}
-
-get_constant() {
-    git config "extendjira.subkey" || echo $DEFAULT_CONSTANT
 }
 
 is_feature_branch() {
@@ -34,7 +29,6 @@ get_issue_id() {
 #
 # Main
 #
-constant=$(get_constant)
 commit_file="$1"
 branch=$(get_current_branch)
 
