@@ -1,11 +1,14 @@
 #!/usr/bin/env bats
-load "lib/test_helper"
+load "../lib/filesystem"
+load "../lib/git"
+load "../lib/scaffolding"
+load "lib/unit"
 
 #
 # Variables
 #
 TEST_ENTRYPOINT="commit-msg"
-TEST_HOOK="010-checkjira.empty"
+TEST_HOOK="checkjira.empty"
 
 #
 # Setup/Teardown
@@ -23,82 +26,87 @@ function teardown() {
 #
 
 @test "Standard commit message" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT="Commit has no issue id"
 
+    copy_entrypoint $TEST_ENTRYPOINT .
+    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
+
+    git_first_commit
+    git_dummy
     git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
 
-    git commit -a -m "$COMMIT"
+    git_mock_commit "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == $COMMIT ]]
+    [[ "$commit" == $COMMIT ]]
 }
 
 @test "Branch is not feature" {
-    init_commit
+    BRANCH="AS-100-work-branch"
+    COMMIT="Commit has no issue id"
 
-    copy_entry $TEST_ENTRYPOINT
+    copy_entrypoint $TEST_ENTRYPOINT .
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
 
-    BRANCH="AS-100-work-branch"
-    COMMIT="#! Commit has no issue id"
-
+    git_first_commit
+    git_dummy
     git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
 
-    git commit -a -m "$COMMIT"
+    git_mock_commit "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" == $COMMIT ]]
 }
 
 @test "Empty commit on normal branch" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="AS-100-work-branch"
     COMMIT=""
 
-    git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
+    copy_entrypoint $TEST_ENTRYPOINT .
+    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
 
-    run git commit -a -m "$COMMIT"
+    git_first_commit
+    git_dummy
+    git checkout -b $BRANCH > /dev/null 2>&1
+
+    git_mock_commit "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
+
     echo "status: $status"
     echo "output: $output"
-    [ "$status" -ne 0 ]
+    echo "commit: $commit"
+    [ "$status" -eq 0 ]
 }
 
 @test "Empty commit on branch" {
-    init_commit
-
-    copy_entry $TEST_ENTRYPOINT
-    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
-
     BRANCH="feature/AS-100-work-branch"
     COMMIT=""
 
+    copy_entrypoint $TEST_ENTRYPOINT .
+    copy_hook $TEST_ENTRYPOINT $TEST_HOOK
+
+    git_first_commit
+    git_dummy
     git checkout -b $BRANCH > /dev/null 2>&1
-    echo "Simple" >> file
 
-    git commit -a -m "$COMMIT"
+    git_mock_commit "$COMMIT"
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
 
-    run git log -1 --pretty=%B
     echo "status: $status"
     echo "output: $output"
+    echo "commit: $commit"
     [ "$status" -eq 0 ]
-    [[ "$output" ==  "[AS-100]"* ]]
+    [[ "$commit" ==  "[AS-100]"* ]]
 }

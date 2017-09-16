@@ -1,5 +1,8 @@
 #!/usr/bin/env bats
-load "lib/test_helper"
+load "../lib/filesystem"
+load "../lib/git"
+load "../lib/scaffolding"
+load "lib/unit"
 
 #
 # Variables

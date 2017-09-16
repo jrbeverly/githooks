@@ -29,7 +29,6 @@ function copy_entrypoint() {
     path="$2"
 
     dir_src="$(get_source_dir)"
-    dir_hooks="$entrypoint.d"
 
     cp "$dir_src/$entrypoint" "$2"
     chmod +x "$2"
@@ -40,8 +39,19 @@ function copy_resource() {
     resource="$2"
 
     dir_resource="$(get_resource_dir)"
-    dir_hooks="$entrypoint.d/"
+    dir_hooks="$entrypoint.d"
 
     mkdir -p "$dir_hooks"
-    cp "$dir_resource/$resource" "$dir_hooks"
+    cp "$dir_resource/$resource" "$dir_hooks/"
+}
+
+function copy_hook() {
+    entrypoint="$1"
+    hook="$2"
+
+    dir_src="$(get_source_dir)"
+    dir_hooks="$entrypoint.d"
+
+    mkdir -p "$dir_hooks"
+    cp "$dir_src/$dir_hooks/"*"-$hook.sh" "$dir_hooks/"
 }

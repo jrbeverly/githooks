@@ -1,4 +1,5 @@
 #!/bin/bash
+command -v git >/dev/null 2>&1 || { echo >&2 "The tests requires 'git' but it's not installed.  Aborting."; exit 1; }
 
 #
 # Git Helpers
@@ -20,9 +21,25 @@ function git_commit() {
     git commit -a -m "$1" > /dev/null 2>&1
 }
 
+function git_mock_commit() {
+    echo "$1" >> $(git_mock_commit_path)
+}
+
+function git_mock_commit_path() {
+    echo "EDITMSG"
+}
+
+function git_mock_commit_message() {
+    cat EDITMSG
+}
+
 function git_dummy() {
     echo "Simple" >> file
     git commit -a -m "Dummy" > /dev/null 2>&1
+}
+
+function git_change() {
+    echo "Simple" >> file
 }
 
 #
