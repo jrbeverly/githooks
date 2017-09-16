@@ -40,7 +40,7 @@ test-entrypoint:
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
-    - sh tests/integration/run.sh
+    - sh tests/entrypoint/run.sh
   dependencies:
     - build
   only:
