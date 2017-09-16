@@ -65,13 +65,27 @@ function test_setup() {
     mkdir -p "$test_path"
     cd "$test_path"
 
-    git init
-    git config user.email "test@test.com"
-    git config user.name "test"
+    git init > /dev/null 2>&1
+    git config user.email "test@test.com" > /dev/null 2>&1
+    git config user.name "test" > /dev/null 2>&1
 }
 
 function test_teardown() {  
     rm -rf "$(get_target_dir)/${BATS_TEST_NAME}"
+}
+
+#
+# Git Helpers
+#
+function init_commit() {
+    echo "Simple" > file
+    git add file > /dev/null 2>&1
+    git commit -a -m "Init" > /dev/null 2>&1
+}
+
+function dummy_commit() {
+    echo "Simple" >> file
+    git commit -a -m "Dummy" > /dev/null 2>&1
 }
 
 #
@@ -85,6 +99,7 @@ function init_hook() {
     DIR_HOOKS="$ENTRYPOINT.d"
     
     cp "$DIR_SRC/$ENTRYPOINT" ".git/hooks/$ENTRYPOINT"
+    chmod +x ".git/hooks/$ENTRYPOINT"
     mkdir -p ".git/hooks/$DIR_HOOKS"    
 }
 
