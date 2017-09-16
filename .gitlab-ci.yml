@@ -8,7 +8,7 @@ stages:
   - build
   - test_entry
   - test_unit
-  - test_integratio
+  - test_integration
   - deploy
 
 variables:
