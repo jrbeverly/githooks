@@ -75,7 +75,7 @@ function teardown() {
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="AS-100-work-branch"
-    COMMIT="!# Commit has no issue id"
+    COMMIT="#! Commit has no issue id"
 
     git checkout -b $BRANCH > /dev/null 2>&1
     echo "Simple" >> file
@@ -96,7 +96,7 @@ function teardown() {
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
-    COMMIT="!# Commit has no issue id"
+    COMMIT="#! Commit has no issue id"
 
     git config --add "$TEST_CONFIG_HOOK" "!!!!"
     git checkout -b $BRANCH > /dev/null 2>&1
@@ -162,7 +162,7 @@ function teardown() {
     copy_hook $TEST_ENTRYPOINT $TEST_HOOK
     
     BRANCH="feature/AS-100-work-branch"
-    COMMIT="!# Commit has no issue id"
+    COMMIT="#! Commit has no issue id"
 
     git config --add "$TEST_CONFIG_HOOK" "!#!"
     git checkout -b $BRANCH > /dev/null 2>&1
