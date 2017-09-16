@@ -6,11 +6,13 @@ image: alpine:latest
 
 stages:
   - build
-  - test
+  - test_entry
+  - test_unit
+  - test_integratio
   - deploy
 
 variables:
-  CI: true
+  CI: "true"
 
 # ----------------------------------------
 # Prescript
@@ -34,7 +36,7 @@ build:
 # ----------------------------------------
 
 test-entrypoint:
-  stage: test
+  stage: test_entry
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
@@ -46,25 +48,25 @@ test-entrypoint:
     - master
 
 test-unit:
-  stage: test
+  stage: test_unit
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
     - sh tests/unit/run.sh
   dependencies:
-    - test-entrypoint
+    - build
   only:
     - web
     - master
 
 test-integration:
-  stage: test
+  stage: test_integration
   image: jrbeverly/bats:baseimage
   script:
     - sh .docker/provision.sh
     - sh tests/integration/run.sh
   dependencies:
-    - test-unit
+    - build
   only:
     - web
     - master
