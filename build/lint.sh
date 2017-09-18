@@ -1,4 +1,5 @@
 #!/bin/sh
+command -v shellcheck >/dev/null 2>&1 || { echo >&2 "The script requires 'shellcheck' but it's not installed.  Aborting."; exit 1; }
 err=0
 
 #
@@ -6,20 +7,13 @@ err=0
 #
 DIR=$(dirname "$(readlink -f "$0")")
 DIR_ROOT=$(dirname "$DIR")
-DIR_BIN="$DIR_ROOT/bin"
-FILES="$DIR_BIN/*"
-
-#
-# Verification
-#
-command -v shellcheck >/dev/null 2>&1 || { echo >&2 "The script requires 'shellcheck' but it's not installed.  Aborting."; exit 1; }
+DIR_SRC="$DIR_ROOT/src"
+FILES="$DIR_SRC/*"
 
 #
 # Main
 #
-rm -rf "${DIR_BIN:?}"/* && mkdir -p "$DIR_BIN"
-cp -R "$DIR_ROOT/src/"* "$DIR_BIN/"
-cd "$DIR_BIN/"
+cd "$DIR_SRC/"
 
 echo "/*       _\|/_"
 echo "         (o o)"

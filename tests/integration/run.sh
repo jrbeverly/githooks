@@ -1,10 +1,10 @@
 #!/bin/sh
-DIR=$(dirname "$(readlink -f "$0")")
+command -v bats >/dev/null 2>&1 || { echo >&2 "The script requires 'bats' but it's not installed.  Aborting."; exit 1; }
 
 #
-# Verification
+# Variables
 #
-command -v bats >/dev/null 2>&1 || { echo >&2 "The script requires 'bats' but it's not installed.  Aborting."; exit 1; }
+DIR=$(dirname "$(readlink -f "$0")")
 
 #
 # Main
