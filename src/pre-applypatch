@@ -3,8 +3,9 @@
 #
 # Variables
 #
+SCRIPT="$(basename "$0")"
 DIR=$(dirname "$(readlink -f "$0")")
-DIR_HOOKS="$DIR/pre-applypatch.d"
+DIR_HOOKS="$DIR/$SCRIPT.d"
 FILES="$DIR_HOOKS/*.sh"
 
 #
