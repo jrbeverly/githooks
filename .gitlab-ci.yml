@@ -29,6 +29,7 @@ build:
     - sh build/lint.sh
   only:
     - web
+    - develop
     - master
 
 # ----------------------------------------
@@ -45,6 +46,7 @@ test-entrypoint:
     - build
   only:
     - web
+    - develop
     - master
 
 test-unit:
@@ -57,6 +59,7 @@ test-unit:
     - build
   only:
     - web
+    - develop
     - master
 
 test-integration:
@@ -69,6 +72,7 @@ test-integration:
     - build
   only:
     - web
+    - develop
     - master
 
 # ----------------------------------------

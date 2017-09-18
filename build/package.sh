@@ -9,12 +9,15 @@ DIR_ROOT=$(dirname "$DIR")
 DIR_SRC="$DIR_ROOT/src"
 DIR_BUILD="$DIR_ROOT/build"
 DIR_OUT="$DIR_ROOT/out"
+
 VERSION=$(cat "$DIR_BUILD/VERSION")
 RELEASE="githooks-$VERSION.zip"
 
 #
 # Main
 #
-rm -rf "${DIR_OUT:?}"/* && mkdir -p "$DIR_OUT"
+rm -rf "${DIR_OUT:?}"/*
+mkdir -p "$DIR_OUT"
 cd "$DIR_SRC/"
+
 zip -r "$DIR_OUT/$RELEASE" .
