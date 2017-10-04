@@ -43,7 +43,6 @@ function teardown() {
     [[ "$commit" == "AS-100 Commit has no issue id" ]]
 }
 
-
 @test "Replace using custom constant" {
     BRANCH="feature/AS-100-work-branch"
     COMMIT="!!!! Commit has no issue id"
@@ -59,6 +58,22 @@ function teardown() {
     echo "commit: $commit"
     [ "$status" -eq 0 ]
     [[ "$commit" == "AS-100 Commit has no issue id" ]]
+}
+
+@test "Replace multiple instances using constant" {
+    BRANCH="feature/AS-100-work-branch"
+    COMMIT="#! Commit has no issue id #!"
+
+    git_quick_commit "$TEST_ENTRYPOINT" "$TEST_HOOK" "$BRANCH" "$COMMIT"
+
+    run sh $TEST_ENTRYPOINT "$(git_mock_commit_path)"
+    commit=$(git_mock_commit_message)
+
+    echo "status: $status"
+    echo "output: $output"
+    echo "commit: $commit"
+    [ "$status" -eq 0 ]
+    [[ "$commit" == "AS-100 Commit has no issue id AS-100" ]]
 }
 
 @test "Branch is not feature" {
