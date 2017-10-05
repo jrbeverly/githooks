@@ -1,7 +1,5 @@
 <h1 align="center">
-    <a href="https://gitlab.com/jrbeverly/githooks" title="GitHooks Documentation">
-        <img alt="Githooks" src="https://gitlab.com/jrbeverly/githooks/raw/viewdocs/docs/icon/icon.png" width="200px" height="200px" />
-    </a>
+    <img alt="Githooks" src="https://gitlab.com/jrbeverly/githooks/raw/viewdocs/docs/icon/icon.png" width="200px" height="200px" />
     <br /> Githooks
 </h1>
 
@@ -13,6 +11,7 @@
     <a href="https://gitlab.com/jrbeverly/githooks/commits/master"><img alt="pipeline status" src="https://gitlab.com/jrbeverly/githooks/badges/master/pipeline.svg" /></a>
     <a href="https://gitlab.com/jrbeverly/githooks/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
     <a href="https://gitlab.com/jrbeverly/githooks/-/jobs/artifacts/master/download?job=deploy"><img alt="download" src="https://img.shields.io/badge/hooks-zip-green.svg" /></a>
+    <a href="https://gitlab.com/jrbeverly/githooks"><img alt="repository" src="https://img.shields.io/badge/gitlab-githooks-red.svg" /></a>
 </div>
 <br />
 
