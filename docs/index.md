@@ -11,7 +11,7 @@
 
 <div align="center">
     <a href="https://gitlab.com/jrbeverly/githooks/commits/master"><img alt="pipeline status" src="https://gitlab.com/jrbeverly/githooks/badges/master/pipeline.svg" /></a>
-    <a href="https://gitlab.com/jrbeverly/githooks/commits/master"><img alt="pipeline status" src="https://gitlab.com/jrbeverly/githooks/badges/master/pipeline.svg" /></a>
+    <a href="https://gitlab.com/jrbeverly/githooks/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
     <a href="https://gitlab.com/jrbeverly/githooks/commits/master"><img alt="pipeline status" src="https://gitlab.com/jrbeverly/githooks/badges/master/pipeline.svg" /></a>
     <a href="https://gitlab.com/jrbeverly/githooks/commits/master"><img alt="pipeline status" src="https://gitlab.com/jrbeverly/githooks/badges/master/pipeline.svg" /></a>
 </div>
