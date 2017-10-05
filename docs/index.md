@@ -1,6 +1,6 @@
 <h1 align="center">
     <a href="https://gitlab.com/jrbeverly/githooks" title="GitHooks Documentation">
-        <img alt="Githooks" src="https://gitlab.com/jrbeverly/githooks/raw/contrib/docs/icon/icon.png" width="200px" height="200px" />
+        <img alt="Githooks" src="https://gitlab.com/jrbeverly/githooks/raw/viewdocs/docs/icon/icon.png" width="200px" height="200px" />
     </a>
     <br /> Githooks
 </h1>
