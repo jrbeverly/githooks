@@ -73,3 +73,7 @@ The `commit-msg` hook takes a path to a temporary file that contais the commit m
 ### Hook: pre-push
 
 The `pre-push` hook runs during git push, after the remote refs have been updated but before any objects have been transferred. If this script exits non-zero, Git aborts the commit process. The following hooks are designed to prevent mistakes or encourage better practices.
+
+## Acknowledgements
+
+The project icon is by [Mario Gallego Adán from the Noun Project](docs/icon/README.md).
