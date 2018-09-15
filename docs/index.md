@@ -1,24 +1,9 @@
-<h1 align="center">
-    <img alt="Githooks" src="https://gitlab.com/jrbeverly/githooks/raw/viewdocs/docs/icon/icon.png" width="200px" height="200px" />
-    <br /> Githooks
-</h1>
-
-<p align="center">
-    GitHooks provides a multi-hook framework for Git Hooks
-</p>
-
-<div align="center">
-    <a href="https://gitlab.com/jrbeverly/githooks/commits/master"><img alt="pipeline status" src="https://gitlab.com/jrbeverly/githooks/badges/master/pipeline.svg" /></a>
-    <a href="https://gitlab.com/jrbeverly/githooks/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
-    <a href="https://gitlab.com/jrbeverly/githooks/-/jobs/artifacts/master/download?job=deploy"><img alt="download" src="https://img.shields.io/badge/hooks-zip-green.svg" /></a>
-    <a href="https://gitlab.com/jrbeverly/githooks"><img alt="repository" src="https://img.shields.io/badge/gitlab-githooks-red.svg" /></a>
-</div>
-<br />
+# Githooks
 
 ## Summary
 
 GitHooks provides a multi-hook framework for Git Hooks, along with a collection of scripts for the purposes of encouraging a commit policy, altering the project environment depending on the state of the repository, and implementing continuous integration workflows. The framework allows multi-script execution,  you can use GitHooks to automate or optimize virtually any aspect of your development workflow. 
- 
+
 ## Getting Started
 
 Git Hooks are event-based scripts you can place in a hooks directory to trigger actions at certain points in git’s execution. When you run certain git commands, the software will run the associated script within the git repository. GitHooks extends on this by enabling the installation of any arbitrary number of hooks for a command.
@@ -54,7 +39,7 @@ After copying in the entrypoint hook, you will be able to copy hooks into a sub-
 cp 001-my-githook.sh .git/hooks/commit-msg.d/
 ```
 
-This will install the hook `001-my-githook.sh` into the `commit-msg.d/` directory. When the entrypoint `commit-msg` is executed, it will call any scripts in the `commit-msg.d/` directory. The entrypoint hook can be of the form of any supported git hook (`applypatch-msg`, `commit-msg`, `post-update`, `pre-applypatch`, `pre-commit`, etc). 
+This will install the hook `001-my-githook.sh` into the `commit-msg.d/` directory. When the entrypoint `commit-msg` is executed, it will call any scripts in the `commit-msg.d/` directory. The entrypoint hook can be of the form of any supported git hook (`applypatch-msg`, `commit-msg`, `post-update`, `pre-applypatch`, `pre-commit`, etc).
 
 ## Hooks
 
