@@ -1,0 +1,22 @@
+{
+  "slug": "githooks",
+  "namespace": "jrbeverly",
+  "status": "archived",
+  "icon": "icon.svg",
+  "license": {
+    "type": "MIT",
+    "content": "Jonathan Beverly <jrbeverly>"
+  },
+  "topics": [
+    "linux",
+    "bats",
+    "git-hooks",
+    "workflow",
+    "bash",
+    "collection"
+  ],
+  "languages": [
+    "Dockerfile",
+    "Shell"
+  ]
+}
