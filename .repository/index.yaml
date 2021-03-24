@@ -1,0 +1,19 @@
+slug: githooks
+description: GitHooks provides a multi-hook framework for Git Hooks.
+project: workbench
+namespace:
+status: archived
+icon: icon.svg
+license:
+  type: MIT
+  content: Jonathan Beverly <jrbeverly>
+  year: 2017
+topics: |-
+  [
+    "linux",
+    "bats",
+    "git-hooks",
+    "workflow",
+    "bash",
+    "collection"
+  ]
